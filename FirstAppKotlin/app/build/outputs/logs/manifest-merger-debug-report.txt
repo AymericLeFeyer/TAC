@@ -1,0 +1,176 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:2:1-22:12
+INJECTED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:2:1-22:12
+INJECTED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:2:1-22:12
+INJECTED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:2:1-22:12
+MERGED from [androidx.core:core-ktx:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/4723a290dc509e29bc043c72e96a6923/jetified-core-ktx-1.1.0/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.material:material:1.2.1] /home/aymeric/.gradle/caches/transforms-2/files-2.1/60f445900515fbd617cf4852baf93647/material-1.2.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.appcompat:appcompat:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/5f13b0cbd7cbecb81f6e2c9fc4f35553/appcompat-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] /home/aymeric/.gradle/caches/transforms-2/files-2.1/7fbc875f7af4b68908e8ff344a2ab86e/constraintlayout-1.1.3/AndroidManifest.xml:2:1-11:12
+MERGED from [com.github.bumptech.glide:glide:4.9.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/5c341f6b5982e2e9f9e0f53ee62ba815/jetified-glide-4.9.0/AndroidManifest.xml:2:1-12:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/5ce33a2b59e728956b1c5e11f2fa2a8c/cursoradapter-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager2:viewpager2:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/076f786bd3356cd31c2c25a4e6eb8238/jetified-viewpager2-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.fragment:fragment:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/c8059d760c519082e9e1ba7696fe7cb2/fragment-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/3edb076d27679f848bd7687427030ed1/jetified-appcompat-resources-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/02970b4ed63a7e4c8fac246850101806/drawerlayout-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/0547f6cc4189adffc9734c5d7f7465df/coordinatorlayout-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.transition:transition:1.2.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/60d327c8233c46ffd15d5ca4717cda80/transition-1.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/34a78877b19be9b2385f74c6884a5c83/vectordrawable-animated-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/4758bd8d280125927d04f0616d0e9bd1/vectordrawable-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/d89f5ebf8b568de855e5c904c0dd1a36/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/3ec108f2860a9f60bc7864ce9886cfe9/loader-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/5a72348c5931a3728e1fbff4c1fc8fcc/jetified-activity-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/16f03aec782cd43772f8a9d2e1ba3aac/recyclerview-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.customview:customview:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/9e0bc914ab68d073ea7fa6d73f6db120/customview-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.2.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/6b62f6f419d1e02769e0c9e5fcef1f74/core-1.2.0/AndroidManifest.xml:17:1-26:12
+MERGED from [androidx.cardview:cardview:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/c7209da5feb5a9a2920e4bd83635d413/cardview-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.github.bumptech.glide:gifdecoder:4.9.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/c0dadd9f034dee2eaad557d8e4c6b9e3/jetified-gifdecoder-4.9.0/AndroidManifest.xml:2:1-11:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/02798deba80efca9ba86f44198fca25b/versionedparcelable-1.1.0/AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/05523579f0a67aa331a02def998c1e30/lifecycle-runtime-2.1.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/7fd215c27609b5ee5564ac876b27f977/lifecycle-viewmodel-2.1.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/d2787d4b71a473c2e246b08e233993a0/jetified-savedstate-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/34d48c4308e9a53c56122ca2ce28a1f9/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/3b0b05070bc9286d52a6b3c810b8c821/lifecycle-livedata-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/aab15b69fca1ffde3f55c4793eabe4f8/lifecycle-livedata-core-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.arch.core:core-runtime:2.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/7d01e9386d69a672da8ac3ffe9c7d5f1/core-runtime-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.annotation:annotation-experimental:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/1872025495ba5bf9b3d73aa946ed8fab/jetified-annotation-experimental-1.0.0/AndroidManifest.xml:17:1-24:12
+INJECTED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:2:1-22:12
+INJECTED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:2:1-22:12
+INJECTED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:2:1-22:12
+	package
+		ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:3:5-47
+		INJECTED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml
+		INJECTED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml
+		ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:2:1-22:12
+		INJECTED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml
+		ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:2:1-22:12
+		INJECTED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:2:11-69
+application
+ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:5:5-20:19
+MERGED from [com.google.android.material:material:1.2.1] /home/aymeric/.gradle/caches/transforms-2/files-2.1/60f445900515fbd617cf4852baf93647/material-1.2.1/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.material:material:1.2.1] /home/aymeric/.gradle/caches/transforms-2/files-2.1/60f445900515fbd617cf4852baf93647/material-1.2.1/AndroidManifest.xml:22:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] /home/aymeric/.gradle/caches/transforms-2/files-2.1/7fbc875f7af4b68908e8ff344a2ab86e/constraintlayout-1.1.3/AndroidManifest.xml:9:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] /home/aymeric/.gradle/caches/transforms-2/files-2.1/7fbc875f7af4b68908e8ff344a2ab86e/constraintlayout-1.1.3/AndroidManifest.xml:9:5-20
+MERGED from [com.github.bumptech.glide:glide:4.9.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/5c341f6b5982e2e9f9e0f53ee62ba815/jetified-glide-4.9.0/AndroidManifest.xml:10:5-20
+MERGED from [com.github.bumptech.glide:glide:4.9.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/5c341f6b5982e2e9f9e0f53ee62ba815/jetified-glide-4.9.0/AndroidManifest.xml:10:5-20
+MERGED from [androidx.core:core:1.2.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/6b62f6f419d1e02769e0c9e5fcef1f74/core-1.2.0/AndroidManifest.xml:24:5-89
+MERGED from [androidx.core:core:1.2.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/6b62f6f419d1e02769e0c9e5fcef1f74/core-1.2.0/AndroidManifest.xml:24:5-89
+MERGED from [com.github.bumptech.glide:gifdecoder:4.9.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/c0dadd9f034dee2eaad557d8e4c6b9e3/jetified-gifdecoder-4.9.0/AndroidManifest.xml:9:5-20
+MERGED from [com.github.bumptech.glide:gifdecoder:4.9.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/c0dadd9f034dee2eaad557d8e4c6b9e3/jetified-gifdecoder-4.9.0/AndroidManifest.xml:9:5-20
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/02798deba80efca9ba86f44198fca25b/versionedparcelable-1.1.0/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/02798deba80efca9ba86f44198fca25b/versionedparcelable-1.1.0/AndroidManifest.xml:24:5-25:19
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.2.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/6b62f6f419d1e02769e0c9e5fcef1f74/core-1.2.0/AndroidManifest.xml:24:18-86
+	android:supportsRtl
+		ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:10:9-35
+	android:label
+		ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:8:9-41
+	android:roundIcon
+		ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:9:9-54
+	android:icon
+		ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:7:9-43
+	android:allowBackup
+		ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:6:9-35
+	android:theme
+		ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:11:9-40
+activity#fr.aymericlefeyer.firstappkotlin.NewActivity
+ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:12:9-58
+	android:name
+		ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:12:19-46
+activity#fr.aymericlefeyer.firstappkotlin.MainActivity
+ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:13:9-19:20
+	android:name
+		ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:13:19-47
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:14:13-18:29
+action#android.intent.action.MAIN
+ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:15:17-69
+	android:name
+		ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:15:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:17:17-77
+	android:name
+		ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml:17:27-74
+uses-sdk
+INJECTED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml
+INJECTED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml
+MERGED from [androidx.core:core-ktx:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/4723a290dc509e29bc043c72e96a6923/jetified-core-ktx-1.1.0/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.core:core-ktx:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/4723a290dc509e29bc043c72e96a6923/jetified-core-ktx-1.1.0/AndroidManifest.xml:5:5-7:41
+MERGED from [com.google.android.material:material:1.2.1] /home/aymeric/.gradle/caches/transforms-2/files-2.1/60f445900515fbd617cf4852baf93647/material-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.2.1] /home/aymeric/.gradle/caches/transforms-2/files-2.1/60f445900515fbd617cf4852baf93647/material-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/5f13b0cbd7cbecb81f6e2c9fc4f35553/appcompat-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/5f13b0cbd7cbecb81f6e2c9fc4f35553/appcompat-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] /home/aymeric/.gradle/caches/transforms-2/files-2.1/7fbc875f7af4b68908e8ff344a2ab86e/constraintlayout-1.1.3/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] /home/aymeric/.gradle/caches/transforms-2/files-2.1/7fbc875f7af4b68908e8ff344a2ab86e/constraintlayout-1.1.3/AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.bumptech.glide:glide:4.9.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/5c341f6b5982e2e9f9e0f53ee62ba815/jetified-glide-4.9.0/AndroidManifest.xml:6:5-8:41
+MERGED from [com.github.bumptech.glide:glide:4.9.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/5c341f6b5982e2e9f9e0f53ee62ba815/jetified-glide-4.9.0/AndroidManifest.xml:6:5-8:41
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/5ce33a2b59e728956b1c5e11f2fa2a8c/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/5ce33a2b59e728956b1c5e11f2fa2a8c/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager2:viewpager2:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/076f786bd3356cd31c2c25a4e6eb8238/jetified-viewpager2-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager2:viewpager2:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/076f786bd3356cd31c2c25a4e6eb8238/jetified-viewpager2-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/c8059d760c519082e9e1ba7696fe7cb2/fragment-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/c8059d760c519082e9e1ba7696fe7cb2/fragment-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/3edb076d27679f848bd7687427030ed1/jetified-appcompat-resources-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/3edb076d27679f848bd7687427030ed1/jetified-appcompat-resources-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/02970b4ed63a7e4c8fac246850101806/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/02970b4ed63a7e4c8fac246850101806/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/0547f6cc4189adffc9734c5d7f7465df/coordinatorlayout-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/0547f6cc4189adffc9734c5d7f7465df/coordinatorlayout-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.2.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/60d327c8233c46ffd15d5ca4717cda80/transition-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.2.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/60d327c8233c46ffd15d5ca4717cda80/transition-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/34a78877b19be9b2385f74c6884a5c83/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/34a78877b19be9b2385f74c6884a5c83/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/4758bd8d280125927d04f0616d0e9bd1/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/4758bd8d280125927d04f0616d0e9bd1/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager:viewpager:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/d89f5ebf8b568de855e5c904c0dd1a36/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/d89f5ebf8b568de855e5c904c0dd1a36/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/3ec108f2860a9f60bc7864ce9886cfe9/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/3ec108f2860a9f60bc7864ce9886cfe9/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/5a72348c5931a3728e1fbff4c1fc8fcc/jetified-activity-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/5a72348c5931a3728e1fbff4c1fc8fcc/jetified-activity-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/16f03aec782cd43772f8a9d2e1ba3aac/recyclerview-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/16f03aec782cd43772f8a9d2e1ba3aac/recyclerview-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/9e0bc914ab68d073ea7fa6d73f6db120/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/9e0bc914ab68d073ea7fa6d73f6db120/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.2.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/6b62f6f419d1e02769e0c9e5fcef1f74/core-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.2.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/6b62f6f419d1e02769e0c9e5fcef1f74/core-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.cardview:cardview:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/c7209da5feb5a9a2920e4bd83635d413/cardview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/c7209da5feb5a9a2920e4bd83635d413/cardview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.github.bumptech.glide:gifdecoder:4.9.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/c0dadd9f034dee2eaad557d8e4c6b9e3/jetified-gifdecoder-4.9.0/AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.bumptech.glide:gifdecoder:4.9.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/c0dadd9f034dee2eaad557d8e4c6b9e3/jetified-gifdecoder-4.9.0/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/02798deba80efca9ba86f44198fca25b/versionedparcelable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/02798deba80efca9ba86f44198fca25b/versionedparcelable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/05523579f0a67aa331a02def998c1e30/lifecycle-runtime-2.1.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/05523579f0a67aa331a02def998c1e30/lifecycle-runtime-2.1.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/7fd215c27609b5ee5564ac876b27f977/lifecycle-viewmodel-2.1.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/7fd215c27609b5ee5564ac876b27f977/lifecycle-viewmodel-2.1.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/d2787d4b71a473c2e246b08e233993a0/jetified-savedstate-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/d2787d4b71a473c2e246b08e233993a0/jetified-savedstate-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.interpolator:interpolator:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/34d48c4308e9a53c56122ca2ce28a1f9/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/34d48c4308e9a53c56122ca2ce28a1f9/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/3b0b05070bc9286d52a6b3c810b8c821/lifecycle-livedata-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/3b0b05070bc9286d52a6b3c810b8c821/lifecycle-livedata-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/aab15b69fca1ffde3f55c4793eabe4f8/lifecycle-livedata-core-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/aab15b69fca1ffde3f55c4793eabe4f8/lifecycle-livedata-core-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/7d01e9386d69a672da8ac3ffe9c7d5f1/core-runtime-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/7d01e9386d69a672da8ac3ffe9c7d5f1/core-runtime-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/1872025495ba5bf9b3d73aa946ed8fab/jetified-annotation-experimental-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.annotation:annotation-experimental:1.0.0] /home/aymeric/.gradle/caches/transforms-2/files-2.1/1872025495ba5bf9b3d73aa946ed8fab/jetified-annotation-experimental-1.0.0/AndroidManifest.xml:20:5-22:41
+INJECTED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml
+INJECTED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml
+		ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml
+		INJECTED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml
+		ADDED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml
+		INJECTED from /home/aymeric/Git/Fac/TAC/FirstAppKotlin/app/src/main/AndroidManifest.xml

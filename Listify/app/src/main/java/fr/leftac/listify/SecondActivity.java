@@ -1,27 +1,27 @@
 package fr.leftac.listify;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.room.Room;
 
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class SecondActivity extends AppCompatActivity {
+    @BindView(R.id.textView) TextView tv;
+
+    @OnClick(R.id.helloButton)
+    public void hello() {
+        tv.setText("Salut les amis");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Button button = findViewById(R.id.helloButton);
-        TextView tv = findViewById(R.id.textView);
-
-        button.setOnClickListener(v -> {
-            tv.setText("Salut les amis");
-        });
-
-
-
+        ButterKnife.bind(this);
     }
 }

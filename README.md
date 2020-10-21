@@ -1,4 +1,4 @@
-#Branche generateToken
+# Branche generateToken
 
 On apprend à générer un token depuis android en utilisant un client_id et un client_secret (données distribuées par le gestionnaire d'applications tiers Spotify)
 

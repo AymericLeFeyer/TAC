@@ -6,16 +6,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 
-import org.json.JSONObject;
-
-import java.util.Map;
 
 import fr.leftac.listify.api.SpotifyService;
-import fr.leftac.listify.models.Tamer;
-import fr.leftac.listify.models.Tracks;
 import fr.leftac.listify.models.TracksPager;
 import lombok.SneakyThrows;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-
-
 
 
         });

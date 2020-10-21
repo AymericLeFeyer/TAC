@@ -7,9 +7,6 @@
 # Techs and Tools
 ## Android Java 
 
-## ButterKnife
-Simplification de code, bindings de layouts, onClick principalement
-
 ## Retrofit
 Appels API
 

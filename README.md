@@ -1,28 +1,5 @@
-# TAC
+#Branche generateToken
 
-# Contributors 
-- TACQUET Charles
-- LE FEYER Aymeric
+On apprend à générer un token depuis android en utilisant un client_id et un client_secret (données distribuées par le gestionnaire d'applications tiers Spotify)
 
-# Techs and Tools
-## Android Java 
-
-## ButterKnife
-Simplification de code, bindings de layouts, onClick principalement
-
-## Retrofit
-Appels API
-
-## Glide
-Affichage d'image en cache   
-Permet de ne charger qu'une fois l'image pour tout un album
-
-## Jetpack
-Navigation entre les fragments
-
-## Room
-Local storage  
-On sauvegarde l'ID de la track  
-
-## API
-Spotify
+Elle affiche donc dans la console une chaine de caractères correspondant à l'access_token et celui-ci expire au bout d'1 heure.

@@ -1,13 +1,20 @@
 package fr.leftac.listify;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.util.Base64;
 
 import fr.leftac.listify.api.SpotifyService;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -15,44 +22,42 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
+    static final String CLIENT_ID = "3a4b3e391c6c458e8523e701c5becbd8";
+    static final String CLIENT_SECRET = "35cd4fc0704d4bfbbde061e7c7ea4838";
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button = findViewById(R.id.helloButton);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://accounts.spotify.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-        button.setOnClickListener(v -> {
+        SpotifyService api = retrofit.create(SpotifyService.class);
 
-            String token = "BQCrOtXIDOJa-SpbHeov7qWT9em1KMh9vh_D2VD5bhzroOs4jxNiAdLUW2zBYh4RazuKaUzJG6iiqLLtl5y8Hy3KH9GwQJZeDmoqmz7W3j-35mFdCmKDgbdISGM7INwP3NK_GtGR_4tkyluVPJyJHnjVjYh4Qs7BYFOIQ68ls-g_55UfNzC_FAZfxk6jBNffCmCFMHETrA9p";
+        byte[] credentials = (CLIENT_ID+":"+CLIENT_SECRET).getBytes();
+        String basicAuth = "Basic " + Base64.getEncoder().encodeToString(credentials);
 
+        Call call = api.token("client_credentials", basicAuth);
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://api.spotify.com/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                JsonParser parser = new JsonParser();
+                JsonObject responseBody = parser.parse(new Gson().toJson(response.body())).getAsJsonObject();
+                JsonElement token = responseBody.get("access_token");
 
+                Log.i("response", token.toString());
+            }
 
-            SpotifyService client = retrofit.create(SpotifyService.class);
-
-            Call<ResponseBody> call = client.track(token, "macarena", "artist");
-
-            call.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    Log.i("coucou", response.toString());
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    t.printStackTrace();
-
-                }
-            });
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                t.printStackTrace();
+                Log.e("error", "log");
+            }
         });
-
-
-
-
     }
 }

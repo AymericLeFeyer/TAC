@@ -6,7 +6,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 
+import org.json.JSONObject;
+
+import java.util.Map;
+
 import fr.leftac.listify.api.SpotifyService;
+import fr.leftac.listify.models.Tamer;
+import fr.leftac.listify.models.Tracks;
+import fr.leftac.listify.models.TracksPager;
+import lombok.SneakyThrows;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         button.setOnClickListener(v -> {
 
-            String token = "BQCrOtXIDOJa-SpbHeov7qWT9em1KMh9vh_D2VD5bhzroOs4jxNiAdLUW2zBYh4RazuKaUzJG6iiqLLtl5y8Hy3KH9GwQJZeDmoqmz7W3j-35mFdCmKDgbdISGM7INwP3NK_GtGR_4tkyluVPJyJHnjVjYh4Qs7BYFOIQ68ls-g_55UfNzC_FAZfxk6jBNffCmCFMHETrA9p";
+            String token = "BQBhaHocMZoZOAhrq_RQSPPVBzdy70akBupF2nJUmcuX8cVoub8HqiinEuiDgS6_x-Yyg3EDYIqhSA4rdkY";
 
 
             Retrofit retrofit = new Retrofit.Builder()
@@ -35,24 +43,29 @@ public class MainActivity extends AppCompatActivity {
 
             SpotifyService client = retrofit.create(SpotifyService.class);
 
-            Call<ResponseBody> call = client.track(token, "macarena", "artist");
+            Call<TracksPager> call = client.track("Bearer " + token, "macarena", "track");
 
-            call.enqueue(new Callback<ResponseBody>() {
+
+            call.enqueue(new Callback<TracksPager>() {
+
+                @SneakyThrows
                 @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    Log.i("coucou", response.toString());
+                public void onResponse(Call<TracksPager> call, Response<TracksPager> response) {
+                    TracksPager tp = response.body();
+                    Log.i("api", tp.tracks.items.size() + "");
                 }
 
                 @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                public void onFailure(Call<TracksPager> call, Throwable t) {
                     t.printStackTrace();
 
                 }
             });
+
+
+
+
         });
-
-
-
 
     }
 }

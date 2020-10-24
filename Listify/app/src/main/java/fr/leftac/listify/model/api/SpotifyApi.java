@@ -1,4 +1,4 @@
-package fr.leftac.listify.api.services;
+package fr.leftac.listify.model.api;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -8,11 +8,11 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
-public interface SpotifyService {
+public interface SpotifyApi {
     String V1 = "v1/";
 
     @GET(V1 + "search")
-    Call<Object> track(@Header("Authorization") String token, @Query("q") String search, @Query("type") String type);
+    Call<Object> searchTracks(@Header("Authorization") String token, @Query("q") String search, @Query("type") String type);
 
     @FormUrlEncoded
     @POST("token")

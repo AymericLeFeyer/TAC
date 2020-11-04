@@ -3,13 +3,63 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@+id/musicSearchFragment">
+    app:startDestination="@id/launcherFragment">
 
     <fragment
-        android:id="@+id/bookSearchFragment"
-        android:name="fr.leftac.listify.fragment.MusicSearchFragment"
-        android:label="Book Search Fragment"
-        tools:layout="@layout/fragment_book_search">
+        android:id="@+id/musicDetailsFragment"
+        android:name="fr.leftac.listify.fragment.musicDetailsFragment"
+        android:label="fragment_music_details"
+        tools:layout="@layout/fragment_music_details" >
+        <action
+            android:id="@+id/action_musicDetailsFragment_to_albumDetailsFragment"
+            app:destination="@id/albumDetailsFragment" />
+        <action
+            android:id="@+id/action_musicDetailsFragment_to_artistDetailsFragment"
+            app:destination="@id/artistDetailsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/launcherFragment"
+        android:name="fr.leftac.listify.fragment.launcherFragment"
+        android:label="fragment_launcher"
+        tools:layout="@layout/fragment_launcher" >
+        <action
+            android:id="@+id/action_fragmentMain_to_musicSearchFragment"
+            app:destination="@id/musicSearchFragment" />
+        <action
+            android:id="@+id/action_fragmentMain_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/musicSearchFragment"
+        android:name="fr.leftac.listify.fragment.musicSearchFragment"
+        android:label="fragment_music_search"
+        tools:layout="@layout/fragment_music_search" >
+        <action
+            android:id="@+id/action_musicSearchFragment_to_musicDetailsFragment2"
+            app:destination="@id/musicDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="fr.leftac.listify.fragment.favoritesFragment"
+        android:label="fragment_favorites"
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_musicDetailsFragment"
+            app:destination="@id/musicDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/albumDetailsFragment"
+        android:name="fr.leftac.listify.fragment.albumDetailsFragment"
+        android:label="fragment_album_details"
+        tools:layout="@layout/fragment_album_details" >
+        <action
+            android:id="@+id/action_albumDetailsFragment_to_artistDetailsFragment"
+            app:destination="@id/artistDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/artistDetailsFragment"
+        android:name="fr.leftac.listify.fragment.artistDetailsFragment"
+        android:label="fragment_artist_details"
+        tools:layout="@layout/fragment_artist_details" />
 
 </navigation>

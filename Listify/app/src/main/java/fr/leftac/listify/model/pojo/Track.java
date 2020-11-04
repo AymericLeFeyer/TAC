@@ -1,5 +1,10 @@
 package fr.leftac.listify.model.pojo;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import java.util.List;
+
 public class Track {
     private String id;
     private String name;
@@ -65,5 +70,25 @@ public class Track {
 
     public void setDuration(String duration) {
         this.duration = duration;
+    }
+
+    public static Track jsonToTrack(JsonElement res) {
+        // Get the name
+        String name = res.getAsJsonObject()
+                .get("name")
+                .toString()
+                .replaceAll("\"", "");
+
+        Track t = new Track(name);
+
+        // Get the artist
+        Artist artist = Artist.jsonToArtist(res);
+        t.setArtist(artist);
+
+        // Get the album
+        Album album = Album.jsonToAlbum(res, artist);
+        t.setAlbum(album);
+
+        return t;
     }
 }

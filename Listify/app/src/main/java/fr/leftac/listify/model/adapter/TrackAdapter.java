@@ -4,10 +4,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -33,8 +36,12 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Track t = listTracks.get(position);
         holder.track = t;
-
         holder.title.setText(t.getName());
+        holder.artist.setText(t.getArtist().getName());
+        Glide.with(holder.itemView.getContext())
+                .load(t.getAlbum().getImage())
+                .into(holder.album);
+
 
     }
 
@@ -44,10 +51,11 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder
     }
 
 
-
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public final View view;
         public TextView title;
+        public TextView artist;
+        public ImageView album;
 
         public Track track;
 
@@ -55,6 +63,8 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder
             super(v);
             view = v;
             title = view.findViewById(R.id.title);
+            artist = view.findViewById(R.id.artist);
+            album = view.findViewById(R.id.album);
 
         }
     }

@@ -87,15 +87,12 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
     @Override
     public void onFetchProgress(Track track) {
         tracks.add(track);
+        listAdapter.updateItems(tracks);
+        listAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onFetchComplete() {
-        StringBuilder msg = new StringBuilder();
-        for (int i = 0; i < tracks.size(); i++) {
-            msg.append("Track n°").append(i + 1).append(" : ").append(tracks.get(i).getName()).append('\n');
-        }
-        Toast.makeText(getActivity(), msg.toString(), Toast.LENGTH_LONG).show();
         listAdapter.updateItems(tracks);
         listAdapter.notifyDataSetChanged();
     }

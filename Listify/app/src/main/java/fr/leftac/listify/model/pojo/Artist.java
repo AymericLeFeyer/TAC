@@ -13,8 +13,8 @@ public class Artist {
     private String name;
     private String image;
 
-    public Artist(String name) {
-        this.name = name;
+    public Artist() {
+        this.name = "";
         this.image = null;
     }
 
@@ -35,7 +35,9 @@ public class Artist {
     }
 
     public static Artist jsonToArtist(JsonElement res) {
-        String artistName = res.getAsJsonObject()
+        Artist a = new Artist();
+
+        String name = res.getAsJsonObject()
                 .getAsJsonArray("artists")
 
                 .get(0)
@@ -43,8 +45,9 @@ public class Artist {
                 .get("name")
                 .toString()
                 .replaceAll("\"", "");
+        a.setName(name);
 
-        return new Artist(artistName);
+        return a;
     }
 }
 

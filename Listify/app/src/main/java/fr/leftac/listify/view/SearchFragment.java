@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
     private RecyclerView list;
     private TrackAdapter listAdapter;
     private RecyclerView.LayoutManager listLayoutManager;
+    private EditText artistField;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
         tokenButton = view.findViewById(R.id.tokenButton);
         searchButton = view.findViewById(R.id.searchButton);
         list = view.findViewById(R.id.list);
+        artistField = view.findViewById(R.id.artist);
 
         // Init variables
         tracks = new ArrayList<>();
@@ -73,9 +76,14 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
         });
 
         searchButton.setOnClickListener(v -> {
-            tracks = new ArrayList<>();
-            controller = new Controller(this);
-            controller.searchTracks("orelsan");
+            if (!artistField.getText().toString().equals("")) {
+                tracks = new ArrayList<>();
+                controller = new Controller(this);
+                controller.searchTracks(artistField.getText().toString());
+            } else {
+                Toast.makeText(getActivity(), getString(R.string.empty_searchfield), Toast.LENGTH_SHORT).show();
+            }
+
 
         });
 

@@ -16,11 +16,11 @@ public class Album {
     private List<Track> tracks;
     private String image;
 
-    public Album(String name, Artist artist, String image) {
-        this.name = name;
-        this.artist = artist;
+    public Album() {
+        this.name = "";
+        this.artist = null;
         this.tracks = null;
-        this.image = image;
+        this.image = "";
     }
 
     public String getName() {
@@ -56,14 +56,19 @@ public class Album {
     }
 
     public static Album jsonToAlbum(JsonElement res, Artist artist) {
-        String albumName = res.getAsJsonObject()
+        Album a = new Album();
+
+        String name = res.getAsJsonObject()
                 .get("album")
                 .getAsJsonObject()
                 .get("name")
                 .toString()
                 .replaceAll("\"", "");
+        a.setName(name);
 
-        String albumImage = res.getAsJsonObject()
+        a.setArtist(artist);
+
+        String image = res.getAsJsonObject()
                 .get("album")
                 .getAsJsonObject()
                 .getAsJsonArray("images")
@@ -72,8 +77,7 @@ public class Album {
                 .get("url")
                 .toString()
                 .replaceAll("\"", "");
-
-        Album a = new Album(albumName, artist, albumImage);
+        a.setImage(image);
 
         return a;
 

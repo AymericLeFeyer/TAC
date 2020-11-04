@@ -9,6 +9,7 @@ import com.google.gson.JsonParser;
 
 import fr.leftac.listify.model.api.ApiManager;
 import fr.leftac.listify.model.api.TokenManager;
+import fr.leftac.listify.model.pojo.Artist;
 import fr.leftac.listify.model.pojo.Track;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,15 +43,10 @@ public class Controller {
 
                 // TODO: Search if we can increase the number of results (more than 20)
                 for (int i = 0; i < res.size(); i++) {
-                    // Get the name
-                    String name = res.get(i)
-                            .getAsJsonObject()
-                            .get("name")
-                            .toString()
-                            .replaceAll("\"", "");
 
-                    // Give the track to the view
-                    trackCallbackListener.onFetchProgress(new Track(name));
+                    Track t = Track.jsonToTrack(res.get(i));
+
+                    trackCallbackListener.onFetchProgress(t);
                 }
 
                 // Tell the view the query is over

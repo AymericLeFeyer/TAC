@@ -1,20 +1,25 @@
 package fr.leftac.listify.model.pojo;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import java.util.List;
+
 public class Track {
     private String id;
     private String name;
     private Artist artist;
     private Album album;
     private int popularity;
-    private String duration;
+    private int duration;
 
-    public Track(String name) {
+    public Track() {
         this.id = "1";
-        this.name = name;
+        this.name = "";
         this.artist = null;
         this.album = null;
         this.popularity = 0;
-        this.duration = "";
+        this.duration = 0;
 
     }
 
@@ -59,11 +64,53 @@ public class Track {
         this.popularity = popularity;
     }
 
-    public String getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public static Track jsonToTrack(JsonElement res) {
+        Track t = new Track();
+
+        // Get the ID
+        String id = res.getAsJsonObject()
+                .get("id")
+                .toString()
+                .replaceAll("\"", "");
+        t.setId(id);
+
+        // Get the name
+        String name = res.getAsJsonObject()
+                .get("name")
+                .toString()
+                .replaceAll("\"", "");
+        t.setName(name);
+
+        // Get the artist
+        Artist artist = Artist.jsonToArtist(res);
+        t.setArtist(artist);
+
+        // Get the album
+        Album album = Album.jsonToAlbum(res, artist);
+        t.setAlbum(album);
+
+        // Get the popularity
+        int popularity = res.getAsJsonObject()
+                .get("popularity")
+                .getAsInt();
+        t.setPopularity(popularity);
+
+        // Get the popuplarity
+        int duration = res.getAsJsonObject()
+                .get("duration_ms")
+                .getAsInt();
+        t.setDuration(duration);
+
+
+
+        return t;
     }
 }

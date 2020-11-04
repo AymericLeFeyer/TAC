@@ -1,5 +1,7 @@
 package fr.leftac.listify.model.pojo;
 
+import com.google.gson.JsonElement;
+
 import java.util.List;
 
 import lombok.Getter;
@@ -13,4 +15,72 @@ public class Album {
     private Artist artist;
     private List<Track> tracks;
     private String image;
+
+    public Album() {
+        this.name = "";
+        this.artist = null;
+        this.tracks = null;
+        this.image = "";
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Artist getArtist() {
+        return artist;
+    }
+
+    public void setArtist(Artist artist) {
+        this.artist = artist;
+    }
+
+    public List<Track> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(List<Track> tracks) {
+        this.tracks = tracks;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public static Album jsonToAlbum(JsonElement res, Artist artist) {
+        Album a = new Album();
+
+        String name = res.getAsJsonObject()
+                .get("album")
+                .getAsJsonObject()
+                .get("name")
+                .toString()
+                .replaceAll("\"", "");
+        a.setName(name);
+
+        a.setArtist(artist);
+
+        String image = res.getAsJsonObject()
+                .get("album")
+                .getAsJsonObject()
+                .getAsJsonArray("images")
+                .get(0)
+                .getAsJsonObject()
+                .get("url")
+                .toString()
+                .replaceAll("\"", "");
+        a.setImage(image);
+
+        return a;
+
+
+    }
 }

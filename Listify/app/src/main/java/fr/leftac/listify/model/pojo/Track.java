@@ -12,6 +12,7 @@ public class Track {
     private Album album;
     private int popularity;
     private int duration;
+    private boolean favorite;
 
     public Track() {
         this.id = "1";
@@ -20,7 +21,7 @@ public class Track {
         this.album = null;
         this.popularity = 0;
         this.duration = 0;
-
+        this.favorite = false;
     }
 
     // Generate getters and setters
@@ -54,6 +55,14 @@ public class Track {
 
     public void setAlbum(Album album) {
         this.album = album;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 
     public int getPopularity() {

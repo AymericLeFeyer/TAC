@@ -17,9 +17,8 @@ Permet de ne charger qu'une fois l'image pour tout un album
 ## Jetpack
 Navigation entre les fragments
 
-## Room
+## Realm
 Local storage  
-On sauvegarde l'ID de la track  
 
 ## API
-Spotify
+Spotify API

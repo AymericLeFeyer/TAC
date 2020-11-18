@@ -7,9 +7,15 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.util.ArrayList;
+
 import fr.leftac.listify.model.api.ApiManager;
 import fr.leftac.listify.model.api.TokenManager;
+import fr.leftac.listify.model.pojo.Album;
+import fr.leftac.listify.model.pojo.Artist;
 import fr.leftac.listify.model.pojo.Track;
+import io.realm.Realm;
+import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,30 +39,30 @@ public class Controller {
         apiManager.getSpotifyApi().searchTracks(token, q, "track").enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
-                // Parse the response
-                Log.i(TAG, response.toString());
-                JsonObject responseBody = parser.parse(new Gson().toJson(response.body())).getAsJsonObject();
+                if(response.body() != null){
+                    // Parse the response
+                    Log.i(TAG, response.toString());
+                    JsonObject responseBody = parser.parse(new Gson().toJson(response.body())).getAsJsonObject();
 
-                // Get the Json Array
-                JsonArray res = responseBody.getAsJsonObject("tracks").getAsJsonArray("items");
+                    // Get the Json Array
+                    JsonArray res = responseBody.getAsJsonObject("tracks").getAsJsonArray("items");
 
-                // TODO: Search if we can increase the number of results (more than 20)
-                for (int i = 0; i < res.size(); i++) {
-                    // Get the name
-                    String name = res.get(i)
-                            .getAsJsonObject()
-                            .get("name")
-                            .toString()
-                            .replaceAll("\"", "");
+                    // TODO: Search if we can increase the number of results (more than 20)
+                    for (int i = 0; i < res.size(); i++) {
 
-                    // Give the track to the view
-                    trackCallbackListener.onFetchProgress(new Track(name));
+                        Track t = Track.jsonToTrack(res.get(i));
+
+                        trackCallbackListener.onFetchProgress(t);
+                    }
+
+                    // TODO: Give back the array list to the activity (with act argument)
+
+                } else {
+                    Log.e("searchError", "response.body is null");
                 }
 
                 // Tell the view the query is over
                 trackCallbackListener.onFetchComplete();
-
-                // TODO: Give back the array list to the activity (with act argument)
 
             }
 
@@ -65,8 +71,40 @@ public class Controller {
 
             }
         });
+    }
 
+    public void saveTrack(Track track){
+        Realm realm = Realm.getDefaultInstance();
+        try {
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    Track alreadyIn = realm.where(Track.class).equalTo("id", track.getId()).findFirst();
+                    if(alreadyIn == null){
+                        realm.copyToRealm(track);
+                    }
+                }
+            });
+        } finally {
+            realm.close();
+        }
+    }
 
+    public ArrayList<Track> getSavedTracks(){
+        ArrayList<Track> savedTracks = new ArrayList<>();
+        Realm realm = Realm.getDefaultInstance();
+        try {
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    RealmResults<Track> results = realm.where(Track.class).findAll();
+                    savedTracks.addAll(realm.copyFromRealm(results));
+                }
+            });
+        } finally {
+            realm.close();
+        }
+        return savedTracks;
     }
 
     public interface TrackCallbackListener {

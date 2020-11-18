@@ -14,6 +14,11 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 
+import fr.leftac.listify.model.pojo.Album;
+import fr.leftac.listify.model.pojo.Artist;
+import fr.leftac.listify.model.pojo.Track;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     NavController navController;
     NavHostFragment navHostFragment;
     NavigationView navigationView;
+    Realm realm;
     Toolbar toolbar;
 
     //TODO: use fragments instead of activities
@@ -37,7 +43,14 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.nav_view);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-//        NavigationUI.setupActionBarWithNavController(this, navController);
+        // Initialize Realm
+        Realm.init(this);
+        RealmConfiguration config = new RealmConfiguration
+                .Builder()
+                .allowWritesOnUiThread(true)
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(config);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -51,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.mode_view, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
 
 
     @Override

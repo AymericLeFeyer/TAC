@@ -52,6 +52,14 @@
                     android:text="TextView"
                     android:textAlignment="center" />
 
+                <Button
+                    android:id="@+id/favButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:text="Add to fav" />
+
             </LinearLayout>
 
         </LinearLayout>

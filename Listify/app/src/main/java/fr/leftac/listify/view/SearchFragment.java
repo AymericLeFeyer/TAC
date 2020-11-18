@@ -12,6 +12,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,7 +39,8 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
     private TrackAdapter listAdapter;
     private GridLayoutManager gridLayoutManager;
     private EditText artistField;
-    private Switch modeView;
+    private Toolbar toolbar;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +60,7 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
         searchButton = view.findViewById(R.id.searchButton);
         list = view.findViewById(R.id.list);
         artistField = view.findViewById(R.id.artist);
-        modeView = view.findViewById(R.id.modeView);
+        toolbar = getActivity().findViewById(R.id.toolbar);
 
         // Init variables
         tracks = new ArrayList<>();
@@ -94,11 +99,18 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
 
         });
 
-        modeView.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            Log.i("check", ""+isChecked);
-            switchLayout();
-        });
+        // Toolbar
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
 
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switchLayout();
+                switchIcon(item);
+                return false;
+            }
+        });
 
 
         return view;
@@ -115,12 +127,11 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
 
     private void switchIcon(MenuItem item) {
         if (gridLayoutManager.getSpanCount() == 3) {
-            item.setIcon(getResources().getDrawable(R.drawable.ic_baseline_music_video_24));
+            item.setIcon(getResources().getDrawable(R.drawable.ic_list));
         } else {
-            item.setIcon(getResources().getDrawable(R.drawable.ic_baseline_music_video_24));
+            item.setIcon(getResources().getDrawable(R.drawable.ic_grid));
         }
     }
-
 
 
     @Override

@@ -1,6 +1,5 @@
 package fr.leftac.listify.model.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -19,17 +19,38 @@ import fr.leftac.listify.model.pojo.Track;
 
 public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder> {
     private List<Track> listTracks;
+    private GridLayoutManager layoutManager;
 
-    public TrackAdapter(List<Track> listTracks) {
+    private static final int VIEW_TYPE_ROW = 1;
+    private static final int VIEW_TYPE_COLUMN = 2;
+
+    public TrackAdapter(List<Track> listTracks, GridLayoutManager layoutManager) {
         this.listTracks = listTracks;
+        this.layoutManager = layoutManager;
     }
 
     @NonNull
     @Override
     public TrackAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.track_item, parent, false);
+        View view;
+        if (viewType == VIEW_TYPE_ROW) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.track_item_list, parent, false);
+        } else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.track_item_grid, parent, false);
+        }
+
         MyViewHolder vh = new MyViewHolder(view);
         return vh;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        int spanCount = layoutManager.getSpanCount();
+        if (spanCount == 1) {
+            return VIEW_TYPE_ROW;
+        } else {
+            return VIEW_TYPE_COLUMN;
+        }
     }
 
     @Override

@@ -43,11 +43,6 @@ public class HomeFragment extends Fragment {
         NavController navController = navHostFragment.getNavController();
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-//        Button button = view.findViewById(R.id.button);
-//
-//        button.setOnClickListener(v -> {
-//            navController.navigate(R.id.action_homeFragment_to_searchFragment);
-//        });
 
         viewPager = view.findViewById(R.id.pager);
         adapter = new HomeFragment.ScreenSlidePagerAdapter(this);

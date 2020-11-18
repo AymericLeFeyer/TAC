@@ -1,15 +1,18 @@
 package fr.leftac.listify.view;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,8 +32,9 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
     private List<Track> tracks;
     private RecyclerView list;
     private TrackAdapter listAdapter;
-    private RecyclerView.LayoutManager listLayoutManager;
+    private GridLayoutManager gridLayoutManager;
     private EditText artistField;
+    private Switch modeView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,18 +54,20 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
         searchButton = view.findViewById(R.id.searchButton);
         list = view.findViewById(R.id.list);
         artistField = view.findViewById(R.id.artist);
+        modeView = view.findViewById(R.id.modeView);
 
         // Init variables
         tracks = new ArrayList<>();
 
+        gridLayoutManager = new GridLayoutManager(getContext(), 1);
+
 
         // Recycler View
         list.setHasFixedSize(true);
-        listLayoutManager = new LinearLayoutManager(getContext());
-        list.setLayoutManager(listLayoutManager);
+        list.setLayoutManager(gridLayoutManager);
 
         // specify an adapter (see also next example)
-        listAdapter = new TrackAdapter(tracks);
+        listAdapter = new TrackAdapter(tracks, gridLayoutManager);
         list.setAdapter(listAdapter);
 
 
@@ -87,9 +93,23 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
 
         });
 
+        modeView.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            Log.i("check", ""+isChecked);
+            switchLayout();
+        });
+
 
 
         return view;
+    }
+
+    private void switchLayout() {
+        if (gridLayoutManager.getSpanCount() == 1) {
+            gridLayoutManager.setSpanCount(3);
+        } else {
+            gridLayoutManager.setSpanCount(1);
+        }
+        listAdapter.notifyItemRangeChanged(0, listAdapter.getItemCount());
     }
 
     @Override

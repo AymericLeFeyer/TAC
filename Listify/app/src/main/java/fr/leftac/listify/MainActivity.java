@@ -42,7 +42,11 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController);
         // Initialize Realm
         Realm.init(this);
-        RealmConfiguration config = new RealmConfiguration.Builder().allowWritesOnUiThread(true).build();
+        RealmConfiguration config = new RealmConfiguration
+                .Builder()
+                .allowWritesOnUiThread(true)
+                .deleteRealmIfMigrationNeeded()
+                .build();
         Realm.setDefaultConfiguration(config);
     }
 

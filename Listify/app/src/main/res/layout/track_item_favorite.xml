@@ -58,14 +58,6 @@
                 android:layout_weight="2"
                 app:srcCompat="@drawable/ic_baseline_music_video_24" />
 
-            <Button
-                android:id="@+id/favButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="2"
-                android:text="Add to fav" />
-
         </LinearLayout>
 
     </LinearLayout>

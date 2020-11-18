@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import fr.leftac.listify.R;
 
@@ -33,8 +34,15 @@ public class HomeFragment extends Fragment {
         NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         NavController navController = navHostFragment.getNavController();
 
-//        navController.navigate(R.id.action_homeFragment_to_searchFragment);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        Button button = view.findViewById(R.id.button);
 
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        button.setOnClickListener(v -> {
+            navController.navigate(R.id.action_homeFragment_to_searchFragment);
+        });
+
+
+
+        return view;
     }
 }

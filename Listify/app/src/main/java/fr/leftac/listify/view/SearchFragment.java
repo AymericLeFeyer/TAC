@@ -3,6 +3,7 @@ package fr.leftac.listify.view;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -111,6 +112,16 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
         }
         listAdapter.notifyItemRangeChanged(0, listAdapter.getItemCount());
     }
+
+    private void switchIcon(MenuItem item) {
+        if (gridLayoutManager.getSpanCount() == 3) {
+            item.setIcon(getResources().getDrawable(R.drawable.ic_baseline_music_video_24));
+        } else {
+            item.setIcon(getResources().getDrawable(R.drawable.ic_baseline_music_video_24));
+        }
+    }
+
+
 
     @Override
     public void onFetchProgress(Track track) {

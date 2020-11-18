@@ -1,4 +1,4 @@
-package fr.leftac.listify.view;
+package fr.leftac.listify;
 
 import android.os.Bundle;
 

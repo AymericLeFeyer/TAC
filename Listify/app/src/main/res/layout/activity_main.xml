@@ -10,6 +10,9 @@
     tools:openDrawer="start"
     android:orientation="vertical">
 
+        <include
+            layout="@layout/toolbar" />
+
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragment"

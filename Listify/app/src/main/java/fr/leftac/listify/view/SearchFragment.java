@@ -87,8 +87,6 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
 
         });
 
-
-
         return view;
     }
 

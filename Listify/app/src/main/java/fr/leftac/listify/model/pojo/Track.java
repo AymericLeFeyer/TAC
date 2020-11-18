@@ -5,7 +5,11 @@ import com.google.gson.JsonObject;
 
 import java.util.List;
 
-public class Track {
+import io.realm.RealmObject;
+import io.realm.annotations.Required;
+
+public class Track extends RealmObject {
+    @Required
     private String id;
     private String name;
     private Artist artist;
@@ -118,8 +122,19 @@ public class Track {
                 .getAsInt();
         t.setDuration(duration);
 
-
-
         return t;
+    }
+
+    @Override
+    public String toString() {
+        return "Track{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", artist=" + artist +
+                ", album=" + album +
+                ", popularity=" + popularity +
+                ", duration=" + duration +
+                ", favorite=" + favorite +
+                '}';
     }
 }

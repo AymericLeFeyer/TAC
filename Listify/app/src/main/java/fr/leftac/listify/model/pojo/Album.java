@@ -4,16 +4,20 @@ import com.google.gson.JsonElement;
 
 import java.util.List;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.Required;
 import lombok.Getter;
 import lombok.Setter;
 
 // Generate getters and setters with Lombok
 @Getter
 @Setter
-public class Album {
+public class Album extends RealmObject {
+    public String id;
     private String name;
     private Artist artist;
-    private List<Track> tracks;
+    private RealmList<Track> tracks;
     private String image;
 
     public Album() {
@@ -39,11 +43,11 @@ public class Album {
         this.artist = artist;
     }
 
-    public List<Track> getTracks() {
+    public RealmList<Track> getTracks() {
         return tracks;
     }
 
-    public void setTracks(List<Track> tracks) {
+    public void setTracks(RealmList<Track> tracks) {
         this.tracks = tracks;
     }
 

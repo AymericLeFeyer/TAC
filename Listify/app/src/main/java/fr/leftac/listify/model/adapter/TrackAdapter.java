@@ -71,7 +71,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder
                 .load(t.getAlbum().getImage())
                 .into(holder.album);
 
-        if(t.isFavorite()){
+        if(controller.isFavorite(t)){
             holder.favButton.setImageResource(R.drawable.ic_baseline_star_24);
             holder.favButton.setOnClickListener(a -> {
                 t.setFavorite(false);

@@ -25,6 +25,7 @@ public class Controller {
     private TrackCallbackListener trackCallbackListener;
     private ApiManager apiManager;
     private JsonParser parser;
+    private boolean isFav;
 
     public Controller(TrackCallbackListener listener) {
         trackCallbackListener = listener;
@@ -123,6 +124,23 @@ public class Controller {
             realm.close();
         }
         return savedTracks;
+    }
+
+    public boolean isFavorite(Track t) {
+        isFav = false;
+        Realm realm = Realm.getDefaultInstance();
+        try {
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    Track result = realm.where(Track.class).equalTo("id", t.getId()).findFirst();
+                    if(result != null) isFav = true;
+                }
+            });
+        } finally {
+            realm.close();
+        }
+        return isFav;
     }
 
     public interface TrackCallbackListener {

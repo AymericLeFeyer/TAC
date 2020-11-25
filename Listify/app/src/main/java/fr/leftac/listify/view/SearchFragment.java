@@ -86,7 +86,6 @@ public class SearchFragment extends Fragment {
         // Init variables
         if (tracks == null) tracks = new ArrayList<>();
 
-
         gridLayoutManager = new GridLayoutManager(getContext(), 1);
 
         // Recycler View

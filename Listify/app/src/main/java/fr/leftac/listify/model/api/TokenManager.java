@@ -45,17 +45,13 @@ public class TokenManager {
 
                 // Update the token value
 
-                TokenManager.token = token.toString().replaceAll("\"", "");
-
-                Log.i(TAG, "le token a été généré : " + TokenManager.getToken());
-
+                TokenManager.token = "Bearer " + token.toString().replaceAll("\"", "");
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
                 t.printStackTrace();
                 Log.e(TAG, "une erreur est survenue");
-
             }
         });
 

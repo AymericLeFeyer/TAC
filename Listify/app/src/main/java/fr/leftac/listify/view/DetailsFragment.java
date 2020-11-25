@@ -5,15 +5,22 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 
 import fr.leftac.listify.R;
 import fr.leftac.listify.model.pojo.Track;
@@ -46,6 +53,7 @@ public class DetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_details, container, false);
+
     }
 
     @Override
@@ -75,6 +83,11 @@ public class DetailsFragment extends Fragment {
         duration.setText(durationText);
         String popularityText = track.getPopularity()+" %";
         popularity.setText(popularityText);
+
+
+
+
+
 
 
     }

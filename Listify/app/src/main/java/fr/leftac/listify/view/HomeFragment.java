@@ -105,4 +105,5 @@ public class HomeFragment extends Fragment implements Controller.TrackCallbackLi
             return 2;
         }
     }
+
 }

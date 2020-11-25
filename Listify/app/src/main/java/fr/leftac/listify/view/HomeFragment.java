@@ -2,26 +2,38 @@ package fr.leftac.listify.view;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.android.material.tabs.TabLayout;
 
-import fr.leftac.listify.R;
+import java.util.Set;
 
-public class HomeFragment extends Fragment {
+import fr.leftac.listify.R;
+import fr.leftac.listify.controller.Controller;
+import fr.leftac.listify.model.api.TokenManager;
+import fr.leftac.listify.model.pojo.Track;
+
+public class HomeFragment extends Fragment implements Controller.TrackCallbackListener {
 
     ViewPager2 viewPager;
     ScreenSlidePagerAdapter adapter;
     TabLayout tabLayout;
+    private SearchFragment searchFragment;
+    private FavoritesFragment favoritesFragment;
+    private Controller controller;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -52,10 +64,24 @@ public class HomeFragment extends Fragment {
                 (tab, position) -> tab.setText(position == 0 ? "Recherche" : "Favoris")
         ).attach();
 
-
-
+        TokenManager.generateToken();
+        controller = new Controller(this);
 
         return view;
+    }
+
+    @Override
+    public void onFetchProgress(Track track) {
+        searchFragment.getTracks().add(track);
+        searchFragment.updateListAdapter();
+    }
+
+    @Override
+    public void onFetchComplete() {
+        searchFragment.updateListAdapter();
+        if(favoritesFragment != null){
+            favoritesFragment.updateListAdapter();
+        }
     }
 
     class ScreenSlidePagerAdapter extends FragmentStateAdapter {
@@ -65,17 +91,18 @@ public class HomeFragment extends Fragment {
 
         @Override
         public Fragment createFragment(int position) {
-
-            return (position == 0) ? new SearchFragment() : new FavoritesFragment();
+            if(position == 0){
+                searchFragment = new SearchFragment(controller);
+                return searchFragment;
+            } else {
+                favoritesFragment = new FavoritesFragment(controller);
+                return favoritesFragment;
+            }
         }
 
         @Override
         public int getItemCount() {
             return 2;
         }
-
     }
-
-
-
 }

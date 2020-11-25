@@ -25,18 +25,16 @@ public class Controller {
     private TrackCallbackListener trackCallbackListener;
     private ApiManager apiManager;
     private JsonParser parser;
-    private String token;
 
     public Controller(TrackCallbackListener listener) {
         trackCallbackListener = listener;
         apiManager = new ApiManager();
         parser = new JsonParser();
-        token = "Bearer " + TokenManager.getToken();
     }
 
     public void searchTracks(String q) {
         // Call the API
-        apiManager.getSpotifyApi().searchTracks(token, q, "track").enqueue(new Callback<Object>() {
+        apiManager.getSpotifyApi().searchTracks(TokenManager.getToken(), q, "track").enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
                 if(response.body() != null){
@@ -73,7 +71,7 @@ public class Controller {
         });
     }
 
-    public void saveTrack(Track track){
+    public void saveTrackToBDD(Track track){
         Realm realm = Realm.getDefaultInstance();
         try {
             realm.executeTransaction(new Realm.Transaction() {
@@ -88,6 +86,26 @@ public class Controller {
         } finally {
             realm.close();
         }
+        trackCallbackListener.onFetchComplete();
+    }
+
+    public void removeTrackFromBDD(Track track){
+        Realm realm = Realm.getDefaultInstance();
+        try {
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    Track result = realm.where(Track.class).equalTo("id", track.getId()).findFirst();
+                    if(result != null){
+                        track.setFavorite(false);
+                        result.deleteFromRealm();
+                    }
+                }
+            });
+        } finally {
+            realm.close();
+        }
+        trackCallbackListener.onFetchComplete();
     }
 
     public ArrayList<Track> getSavedTracks(){

@@ -1,9 +1,8 @@
 package fr.leftac.listify.model.pojo;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
-import java.util.List;
+import java.util.Date;
 
 import io.realm.RealmObject;
 import io.realm.annotations.Required;
@@ -17,6 +16,7 @@ public class Track extends RealmObject {
     private int popularity;
     private int duration;
     private boolean favorite;
+    private Date favDate;
 
     public Track() {
         this.id = "1";
@@ -26,6 +26,7 @@ public class Track extends RealmObject {
         this.popularity = 0;
         this.duration = 0;
         this.favorite = false;
+        favDate = null;
     }
 
     // Generate getters and setters
@@ -61,14 +62,6 @@ public class Track extends RealmObject {
         this.album = album;
     }
 
-    public boolean isFavorite() {
-        return favorite;
-    }
-
-    public void setFavorite(boolean favorite) {
-        this.favorite = favorite;
-    }
-
     public int getPopularity() {
         return popularity;
     }
@@ -83,6 +76,22 @@ public class Track extends RealmObject {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    public Date getFavDate() {
+        return favDate;
+    }
+
+    public void setFavDate(Date favDate) {
+        this.favDate = favDate;
     }
 
     public static Track jsonToTrack(JsonElement res) {

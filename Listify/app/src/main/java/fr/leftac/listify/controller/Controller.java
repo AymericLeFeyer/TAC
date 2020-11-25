@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import fr.leftac.listify.model.api.ApiManager;
 import fr.leftac.listify.model.api.TokenManager;
@@ -80,6 +81,7 @@ public class Controller {
                 public void execute(Realm realm) {
                     Track alreadyIn = realm.where(Track.class).equalTo("id", track.getId()).findFirst();
                     if(alreadyIn == null){
+                        track.setFavDate(new Date());
                         realm.copyToRealm(track);
                     }
                 }
@@ -99,6 +101,7 @@ public class Controller {
                     Track result = realm.where(Track.class).equalTo("id", track.getId()).findFirst();
                     if(result != null){
                         track.setFavorite(false);
+                        track.setFavDate(null);
                         result.deleteFromRealm();
                     }
                 }

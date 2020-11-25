@@ -26,6 +26,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.Adapter;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -40,9 +41,9 @@ import fr.leftac.listify.model.adapter.TrackAdapter;
 import fr.leftac.listify.model.api.TokenManager;
 import fr.leftac.listify.model.pojo.Track;
 
-public class SearchFragment extends Fragment implements Controller.TrackCallbackListener {
+public class SearchFragment extends Fragment {
 
-    private Button tokenButton, searchButton;
+    private Button searchButton;
     private Controller controller;
     private List<Track> tracks;
     private RecyclerView list;
@@ -51,6 +52,10 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
     private EditText artistField;
     private Toolbar toolbar;
 
+    public SearchFragment(Controller controller) {
+        super();
+        this.controller = controller;
+    }
 
 
 
@@ -70,11 +75,9 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         // Views
-        tokenButton = view.findViewById(R.id.tokenButton);
         searchButton = view.findViewById(R.id.searchButton);
         list = view.findViewById(R.id.list);
         artistField = view.findViewById(R.id.artist);
@@ -85,7 +88,6 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
 
 
         gridLayoutManager = new GridLayoutManager(getContext(), 1);
-
 
         // Recycler View
         list.setHasFixedSize(true);
@@ -104,24 +106,17 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
 
 
         // specify an adapter (see also next example)
-        listAdapter = new TrackAdapter(tracks, gridLayoutManager);
+        listAdapter = new TrackAdapter(tracks, gridLayoutManager, controller);
         list.setAdapter(listAdapter);
 
-
         // Buttons
-        if (TokenManager.getToken() == null) {
-            searchButton.setEnabled(false);
-        }
-
-        tokenButton.setOnClickListener(v -> {
-            TokenManager.generateToken();
-            searchButton.setEnabled(true);
-        });
-
         searchButton.setOnClickListener(v -> {
-            search();
-
-
+            if (!artistField.getText().toString().equals("")) {
+                tracks = new ArrayList<>();
+                controller.searchTracks(artistField.getText().toString());
+            } else {
+                Toast.makeText(getActivity(), getString(R.string.empty_searchfield), Toast.LENGTH_SHORT).show();
+            }
         });
 
         // Toolbar
@@ -136,8 +131,6 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
                 return false;
             }
         });
-
-
 
         return view;
     }
@@ -159,16 +152,11 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
         }
     }
 
-
-    @Override
-    public void onFetchProgress(Track track) {
-        tracks.add(track);
-        listAdapter.updateItems(tracks);
-        listAdapter.notifyDataSetChanged();
+    public List<Track> getTracks() {
+        return tracks;
     }
 
-    @Override
-    public void onFetchComplete() {
+    public void updateListAdapter() {
         listAdapter.updateItems(tracks);
         listAdapter.notifyDataSetChanged();
     }
@@ -211,16 +199,6 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
         alertDialog.show();
 
 
-    }
-
-    public void search() {
-        if (!artistField.getText().toString().equals("")) {
-            tracks = new ArrayList<>();
-            controller = new Controller(this);
-            controller.searchTracks(artistField.getText().toString());
-        } else {
-            Toast.makeText(getActivity(), getString(R.string.empty_searchfield), Toast.LENGTH_SHORT).show();
-        }
     }
 
 }

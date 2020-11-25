@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -26,6 +27,7 @@ import java.util.List;
 
 import fr.leftac.listify.R;
 import fr.leftac.listify.controller.Controller;
+import fr.leftac.listify.model.adapter.RecyclerItemClickListener;
 import fr.leftac.listify.model.adapter.TrackAdapter;
 import fr.leftac.listify.model.api.TokenManager;
 import fr.leftac.listify.model.pojo.Track;
@@ -42,11 +44,17 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
     private Toolbar toolbar;
 
 
+    public SearchFragment() {
+    }
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,7 +71,8 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
         toolbar = getActivity().findViewById(R.id.toolbar);
 
         // Init variables
-        tracks = new ArrayList<>();
+        if (tracks == null) tracks = new ArrayList<>();
+
 
         gridLayoutManager = new GridLayoutManager(getContext(), 1);
 
@@ -71,6 +80,18 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
         // Recycler View
         list.setHasFixedSize(true);
         list.setLayoutManager(gridLayoutManager);
+        list.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), list, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                openDetailsFragment(tracks.get(position));
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+
+            }
+        }));
+
 
         // specify an adapter (see also next example)
         listAdapter = new TrackAdapter(tracks, gridLayoutManager);
@@ -88,13 +109,7 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
         });
 
         searchButton.setOnClickListener(v -> {
-            if (!artistField.getText().toString().equals("")) {
-                tracks = new ArrayList<>();
-                controller = new Controller(this);
-                controller.searchTracks(artistField.getText().toString());
-            } else {
-                Toast.makeText(getActivity(), getString(R.string.empty_searchfield), Toast.LENGTH_SHORT).show();
-            }
+            search();
 
 
         });
@@ -147,4 +162,21 @@ public class SearchFragment extends Fragment implements Controller.TrackCallback
         listAdapter.updateItems(tracks);
         listAdapter.notifyDataSetChanged();
     }
+
+    public void openDetailsFragment(Track t) {
+        DetailsFragment detailsFragment = new DetailsFragment(t);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, detailsFragment).addToBackStack(null).commit();
+
+    }
+
+    public void search() {
+        if (!artistField.getText().toString().equals("")) {
+            tracks = new ArrayList<>();
+            controller = new Controller(this);
+            controller.searchTracks(artistField.getText().toString());
+        } else {
+            Toast.makeText(getActivity(), getString(R.string.empty_searchfield), Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

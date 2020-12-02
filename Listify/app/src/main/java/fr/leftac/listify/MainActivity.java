@@ -48,10 +48,9 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         Realm.setDefaultConfiguration(config);
 
-        toolbar = findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     @Override

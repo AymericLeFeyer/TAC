@@ -113,7 +113,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder
     public void openDetailsFragment(Track track) {
 
         // Create and show the dialog.
-        DialogFragment newFragment = new ViewPagerDetailsFragment(track);
+        DialogFragment newFragment = new ViewPagerDetailsFragment(track, controller);
         newFragment.show(fm, "dialog");
 
     }

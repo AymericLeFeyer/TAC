@@ -28,8 +28,9 @@ public class DetailsFragment extends Fragment {
     private Controller controller;
 
 
-    public DetailsFragment(Track track) {
+    public DetailsFragment(Track track, Controller controller) {
         this.track = track;
+        this.controller = controller;
     }
 
 
@@ -60,6 +61,22 @@ public class DetailsFragment extends Fragment {
         duration = view.findViewById(R.id.duration);
         popularity = view.findViewById(R.id.popularity);
         favButton = view.findViewById(R.id.imageButton);
+
+        if (controller.isFavorite(track)) {
+            favButton.setImageResource(R.drawable.ic_baseline_star_24);
+        } else {
+            favButton.setImageResource(R.drawable.ic_baseline_star_border_24);
+        }
+
+        favButton.setOnClickListener(v -> {
+            if (controller.isFavorite(track)) {
+                controller.removeTrackFromBDD(track);
+                favButton.setImageResource(R.drawable.ic_baseline_star_border_24);
+            } else {
+                controller.saveTrackToBDD(track);
+                favButton.setImageResource(R.drawable.ic_baseline_star_24);
+            }
+        });
 
 
 //        Set

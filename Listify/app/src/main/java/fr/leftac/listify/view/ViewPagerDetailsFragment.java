@@ -15,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 
 import fr.leftac.listify.R;
+import fr.leftac.listify.controller.Controller;
 import fr.leftac.listify.model.pojo.Track;
 
 public class ViewPagerDetailsFragment extends DialogFragment {
@@ -23,9 +24,11 @@ public class ViewPagerDetailsFragment extends DialogFragment {
     ViewPagerAdapter adapter;
     TabLayout tabLayout;
     Track track;
+    Controller controller;
 
-    public ViewPagerDetailsFragment(Track track) {
+    public ViewPagerDetailsFragment(Track track, Controller controller) {
         this.track = track;
+        this.controller = controller;
     }
 
     @Nullable
@@ -51,7 +54,7 @@ public class ViewPagerDetailsFragment extends DialogFragment {
         @Override
         public Fragment createFragment(int position) {
 
-            return new DetailsFragment(track);
+            return new DetailsFragment(track, controller);
 
         }
 

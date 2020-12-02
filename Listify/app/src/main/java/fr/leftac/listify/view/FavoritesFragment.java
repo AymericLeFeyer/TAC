@@ -26,9 +26,8 @@ public class FavoritesFragment extends Fragment {
     private Controller controller;
     private RecyclerView list;
     public TrackAdapter listAdapter;
-    private GridLayoutManager gridLayoutManager;
     private ArrayList tracks;
-    private Toolbar toolbar;
+    private GridLayoutManager gridLayoutManager;
 
     public FavoritesFragment(Controller controller) {
         super();
@@ -47,58 +46,32 @@ public class FavoritesFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_favorites, container, false);
-        toolbar = getActivity().findViewById(R.id.toolbar);
 
         // Recycler View
+        gridLayoutManager = new GridLayoutManager(getContext(), 1);
         list = view.findViewById(R.id.favoritesList);
         list.setHasFixedSize(true);
-        Context context;
-        gridLayoutManager = new GridLayoutManager(getContext(), 1);
+
         list.setLayoutManager(gridLayoutManager);
 
         tracks = controller.getSavedTracks();
         listAdapter = new TrackAdapter(tracks, gridLayoutManager, controller);
         list.setAdapter(listAdapter);
 
-        // Toolbar
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switchLayout();
-                switchIcon(item);
-                return false;
-            }
-        });
-
-
-
         return view;
-    }
-
-    //TODO: Mettre ces methodes qui sont communes avec SearchFragment dans un fichier à part
-    private void switchLayout() {
-        if (gridLayoutManager.getSpanCount() == 1) {
-            gridLayoutManager.setSpanCount(3);
-        } else {
-            gridLayoutManager.setSpanCount(1);
-        }
-        listAdapter.notifyItemRangeChanged(0, listAdapter.getItemCount());
-    }
-
-    private void switchIcon(MenuItem item) {
-        if (gridLayoutManager.getSpanCount() == 3) {
-            item.setIcon(getResources().getDrawable(R.drawable.ic_list));
-        } else {
-            item.setIcon(getResources().getDrawable(R.drawable.ic_grid));
-        }
     }
 
     public void updateListAdapter(){
         tracks = controller.getSavedTracks();
         listAdapter.updateItems(tracks);
         listAdapter.notifyDataSetChanged();
+    }
+
+    public TrackAdapter getListAdapter() {
+        return listAdapter;
+    }
+
+    public GridLayoutManager getGridLayoutManager() {
+        return gridLayoutManager;
     }
 }

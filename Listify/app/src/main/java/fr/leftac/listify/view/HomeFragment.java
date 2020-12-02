@@ -1,14 +1,19 @@
 package fr.leftac.listify.view;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -28,6 +33,7 @@ public class HomeFragment extends Fragment implements Controller.TrackCallbackLi
     private SearchFragment searchFragment;
     private FavoritesFragment favoritesFragment;
     private Controller controller;
+    private Toolbar toolbar;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -57,6 +63,20 @@ public class HomeFragment extends Fragment implements Controller.TrackCallbackLi
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> tab.setText(position == 0 ? "Recherche" : "Favoris")
         ).attach();
+
+        // Toolbar
+        toolbar = getActivity().findViewById(R.id.toolbar);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switchLayout();
+                switchIcon(item);
+                return false;
+            }
+        });
 
         TokenManager.generateToken();
         controller = new Controller(this);
@@ -100,4 +120,38 @@ public class HomeFragment extends Fragment implements Controller.TrackCallbackLi
         }
     }
 
+    private void switchLayout() {
+        if(searchFragment != null){
+            if (searchFragment.getGridLayoutManager().getSpanCount() == 1) {
+                searchFragment.getGridLayoutManager().setSpanCount(3);
+            } else {
+                searchFragment.getGridLayoutManager().setSpanCount(1);
+            }
+            searchFragment.getListAdapter().notifyItemRangeChanged(0,  searchFragment.getListAdapter().getItemCount());
+        }
+        if(favoritesFragment != null){
+            if (favoritesFragment.getGridLayoutManager().getSpanCount() != searchFragment.getGridLayoutManager().getSpanCount()) {
+                favoritesFragment.getGridLayoutManager().setSpanCount( searchFragment.getGridLayoutManager().getSpanCount());
+                favoritesFragment.getListAdapter().notifyItemRangeChanged(0,  favoritesFragment.getListAdapter().getItemCount());
+            }
+        }
+    }
+
+    private void switchIcon(MenuItem item) {
+        Context context = getContext();
+        if(searchFragment != null){
+            if ( searchFragment.getGridLayoutManager().getSpanCount() == 3) {
+                item.setIcon(context.getDrawable(R.drawable.ic_list));
+            } else {
+                item.setIcon(context.getDrawable(R.drawable.ic_grid));
+            }
+        }
+        if(favoritesFragment != null){
+            if (favoritesFragment.getGridLayoutManager().getSpanCount() == 3) {
+                item.setIcon(context.getDrawable(R.drawable.ic_list));
+            } else {
+                item.setIcon(context.getDrawable(R.drawable.ic_grid));
+            }
+        }
+    }
 }

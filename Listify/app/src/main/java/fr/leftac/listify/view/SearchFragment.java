@@ -48,28 +48,22 @@ public class SearchFragment extends Fragment {
     private List<Track> tracks;
     private RecyclerView list;
     private TrackAdapter listAdapter;
-    private GridLayoutManager gridLayoutManager;
     private EditText artistField;
-    private Toolbar toolbar;
+    private GridLayoutManager gridLayoutManager;
 
     public SearchFragment(Controller controller) {
         super();
         this.controller = controller;
     }
 
-
-
     public SearchFragment() {
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,14 +75,13 @@ public class SearchFragment extends Fragment {
         searchButton = view.findViewById(R.id.searchButton);
         list = view.findViewById(R.id.list);
         artistField = view.findViewById(R.id.artist);
-        toolbar = getActivity().findViewById(R.id.toolbar);
 
         // Init variables
         if (tracks == null) tracks = new ArrayList<>();
 
-        gridLayoutManager = new GridLayoutManager(getContext(), 1);
 
         // Recycler View
+        gridLayoutManager = new GridLayoutManager(getContext(), 1);
         list.setHasFixedSize(true);
         list.setLayoutManager(gridLayoutManager);
         list.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), list, new RecyclerItemClickListener.OnItemClickListener() {
@@ -118,37 +111,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        // Toolbar
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switchLayout();
-                switchIcon(item);
-                return false;
-            }
-        });
-
         return view;
-    }
-
-    private void switchLayout() {
-        if (gridLayoutManager.getSpanCount() == 1) {
-            gridLayoutManager.setSpanCount(3);
-        } else {
-            gridLayoutManager.setSpanCount(1);
-        }
-        listAdapter.notifyItemRangeChanged(0, listAdapter.getItemCount());
-    }
-
-    private void switchIcon(MenuItem item) {
-        if (gridLayoutManager.getSpanCount() == 3) {
-            item.setIcon(getResources().getDrawable(R.drawable.ic_list));
-        } else {
-            item.setIcon(getResources().getDrawable(R.drawable.ic_grid));
-        }
     }
 
     public List<Track> getTracks() {
@@ -158,6 +121,14 @@ public class SearchFragment extends Fragment {
     public void updateListAdapter() {
         listAdapter.updateItems(tracks);
         listAdapter.notifyDataSetChanged();
+    }
+
+    public TrackAdapter getListAdapter() {
+        return listAdapter;
+    }
+
+    public GridLayoutManager getGridLayoutManager() {
+        return gridLayoutManager;
     }
 
     public void openDetailsFragment(Track track) {
@@ -199,5 +170,4 @@ public class SearchFragment extends Fragment {
 
 
     }
-
 }

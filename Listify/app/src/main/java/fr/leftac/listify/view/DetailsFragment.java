@@ -28,11 +28,6 @@ public class DetailsFragment extends Fragment {
     private Controller controller;
 
 
-    public DetailsFragment(Controller controller) {
-        super();
-        this.controller = controller;
-    }
-
     public DetailsFragment(Track track) {
         this.track = track;
     }
@@ -81,7 +76,7 @@ public class DetailsFragment extends Fragment {
         duration.setText(durationText);
         String popularityText = track.getPopularity()+" %";
         popularity.setText(popularityText);
-
+        popularity.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
 
 

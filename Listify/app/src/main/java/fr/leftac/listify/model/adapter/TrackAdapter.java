@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,22 +21,25 @@ import java.util.List;
 import fr.leftac.listify.R;
 import fr.leftac.listify.controller.Controller;
 import fr.leftac.listify.model.pojo.Track;
+import fr.leftac.listify.view.ViewPagerDetailsFragment;
 
 public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder> {
     private List<Track> listTracks;
     private GridLayoutManager layoutManager;
     private Controller controller;
     private Context context;
+    private FragmentManager fm;
 
     private static final int SEARCH_VIEW_TYPE = 0;
     private static final int FAVORITES_VIEW_TYPE = 1;
     private static final int VIEW_TYPE_ROW = 1;
     private static final int VIEW_TYPE_COLUMN = 2;
 
-    public TrackAdapter(List<Track> listTracks, GridLayoutManager layoutManager, Controller controller) {
+    public TrackAdapter(List<Track> listTracks, GridLayoutManager layoutManager, Controller controller, FragmentManager fragmentManager) {
         this.listTracks = listTracks;
         this.layoutManager = layoutManager;
         this.controller = controller;
+        this.fm = fragmentManager;
     }
 
     @NonNull
@@ -106,45 +111,13 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder
     }
 
     public void openDetailsFragment(Track track) {
-//        DetailsFragment detailsFragment = new DetailsFragment(track);
-//        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, detailsFragment).addToBackStack(null).commit();
 
-//        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
-//        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View dialogView = inflater.inflate(R.layout.fragment_details, null);
-//        dialogBuilder.setView(dialogView);
-//
-//        //        Init
-//
-//        ImageView image = dialogView.findViewById(R.id.image);
-//        TextView name = dialogView.findViewById(R.id.name);
-//        TextView artist = dialogView.findViewById(R.id.artist);
-//        TextView album = dialogView.findViewById(R.id.album);
-//        TextView duration = dialogView.findViewById(R.id.duration);
-//        TextView popularity = dialogView.findViewById(R.id.popularity);
-//
-//
-////        Set
-//
-//        Glide.with(context)
-//                .load(track.getAlbum().getImage())
-//                .into(image);
-//
-//        name.setText(track.getName());
-//        artist.setText(track.getArtist().getName());
-//        album.setText(track.getAlbum().getName());
-//        int durationValue = track.getDuration() / 1000;
-//        String durationText = durationValue / 60 + ":" + (durationValue % 60 < 10 ? "0" : "") + durationValue % 60;
-//        duration.setText(durationText);
-//        String popularityText = track.getPopularity()+" %";
-//        popularity.setText(popularityText);
-//
-//
-//        AlertDialog alertDialog = dialogBuilder.create();
-//        alertDialog.show();
-
+        // Create and show the dialog.
+        DialogFragment newFragment = new ViewPagerDetailsFragment(track);
+        newFragment.show(fm, "dialog");
 
     }
+
 
     public void updateItems(List<Track> items) {
         this.listTracks = items;

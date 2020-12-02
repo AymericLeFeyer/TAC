@@ -6,6 +6,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface SpotifyApi {
@@ -17,4 +18,9 @@ public interface SpotifyApi {
     @FormUrlEncoded
     @POST("token")
     Call<Object> token(@Field("grant_type") String grant_type, @Header("Authorization") String authorization);
+
+    @GET(V1 + "artists/{id}")
+    Call<Object> getArtist(@Header("Authorization") String token, @Path("id") String id);
+
+
 }

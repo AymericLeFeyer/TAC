@@ -53,8 +53,11 @@ public class ViewPagerDetailsFragment extends DialogFragment {
 
         @Override
         public Fragment createFragment(int position) {
-
-            return new DetailsFragment(track, controller);
+            if (position == 0) {
+                return new DetailsFragment(track, controller);
+            } else {
+                return new ArtistFragment(track.getArtist(), controller);
+            }
 
         }
 

@@ -1,28 +1,21 @@
 package fr.leftac.listify.view;
 
-import android.media.Image;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 
 import fr.leftac.listify.R;
+import fr.leftac.listify.controller.Controller;
 import fr.leftac.listify.model.pojo.Track;
 
 public class DetailsFragment extends Fragment {
@@ -31,10 +24,13 @@ public class DetailsFragment extends Fragment {
 
     private ImageView image;
     private TextView name, artist, album, duration, popularity;
+    private ImageButton favButton;
+    private Controller controller;
 
 
-    public DetailsFragment() {
-        // Required empty public constructor
+    public DetailsFragment(Controller controller) {
+        super();
+        this.controller = controller;
     }
 
     public DetailsFragment(Track track) {
@@ -68,6 +64,8 @@ public class DetailsFragment extends Fragment {
         album = view.findViewById(R.id.album);
         duration = view.findViewById(R.id.duration);
         popularity = view.findViewById(R.id.popularity);
+        favButton = view.findViewById(R.id.imageButton);
+
 
 //        Set
 

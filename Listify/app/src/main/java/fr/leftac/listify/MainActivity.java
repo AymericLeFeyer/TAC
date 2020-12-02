@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
@@ -14,9 +13,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 
-import fr.leftac.listify.model.pojo.Album;
-import fr.leftac.listify.model.pojo.Artist;
-import fr.leftac.listify.model.pojo.Track;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 

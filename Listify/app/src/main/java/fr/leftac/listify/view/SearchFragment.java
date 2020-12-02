@@ -30,28 +30,22 @@ public class SearchFragment extends Fragment {
     private List<Track> tracks;
     private RecyclerView list;
     private TrackAdapter listAdapter;
-    private GridLayoutManager gridLayoutManager;
     private EditText artistField;
-    private Toolbar toolbar;
+    private GridLayoutManager gridLayoutManager;
 
     public SearchFragment(Controller controller) {
         super();
         this.controller = controller;
     }
 
-
-
     public SearchFragment() {
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,14 +57,13 @@ public class SearchFragment extends Fragment {
         searchButton = view.findViewById(R.id.searchButton);
         list = view.findViewById(R.id.list);
         artistField = view.findViewById(R.id.artist);
-        toolbar = getActivity().findViewById(R.id.toolbar);
 
         // Init variables
         if (tracks == null) tracks = new ArrayList<>();
 
-        gridLayoutManager = new GridLayoutManager(getContext(), 1);
 
         // Recycler View
+        gridLayoutManager = new GridLayoutManager(getContext(), 1);
         list.setHasFixedSize(true);
         list.setLayoutManager(gridLayoutManager);
 
@@ -88,37 +81,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        // Toolbar
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switchLayout();
-                switchIcon(item);
-                return false;
-            }
-        });
-
         return view;
-    }
-
-    private void switchLayout() {
-        if (gridLayoutManager.getSpanCount() == 1) {
-            gridLayoutManager.setSpanCount(3);
-        } else {
-            gridLayoutManager.setSpanCount(1);
-        }
-        listAdapter.notifyItemRangeChanged(0, listAdapter.getItemCount());
-    }
-
-    private void switchIcon(MenuItem item) {
-        if (gridLayoutManager.getSpanCount() == 3) {
-            item.setIcon(getResources().getDrawable(R.drawable.ic_list));
-        } else {
-            item.setIcon(getResources().getDrawable(R.drawable.ic_grid));
-        }
     }
 
     public List<Track> getTracks() {
@@ -130,6 +93,51 @@ public class SearchFragment extends Fragment {
         listAdapter.notifyDataSetChanged();
     }
 
+    public TrackAdapter getListAdapter() {
+        return listAdapter;
+    }
+
+    public GridLayoutManager getGridLayoutManager() {
+        return gridLayoutManager;
+    }
+
+    public void openDetailsFragment(Track track) {
+//        DetailsFragment detailsFragment = new DetailsFragment(t);
+//        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, detailsFragment).addToBackStack(null).commit();
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getContext());
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.fragment_details, null);
+        dialogBuilder.setView(dialogView);
+
+        //        Init
+
+        ImageView image = dialogView.findViewById(R.id.image);
+        TextView name = dialogView.findViewById(R.id.name);
+        TextView artist = dialogView.findViewById(R.id.artist);
+        TextView album = dialogView.findViewById(R.id.album);
+        TextView duration = dialogView.findViewById(R.id.duration);
+        TextView popularity = dialogView.findViewById(R.id.popularity);
+
+//        Set
+
+        Glide.with(getContext())
+                .load(track.getAlbum().getImage())
+                .into(image);
+
+        name.setText(track.getName());
+        artist.setText(track.getArtist().getName());
+        album.setText(track.getAlbum().getName());
+        int durationValue = track.getDuration() / 1000;
+        String durationText = durationValue / 60 + ":" + (durationValue % 60 < 10 ? "0" : "") + durationValue % 60;
+        duration.setText(durationText);
+        String popularityText = track.getPopularity()+" %";
+        popularity.setText(popularityText);
 
 
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+
+
+    }
 }

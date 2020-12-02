@@ -12,7 +12,6 @@ import java.util.Date;
 
 import fr.leftac.listify.model.api.ApiManager;
 import fr.leftac.listify.model.api.TokenManager;
-import fr.leftac.listify.model.pojo.Album;
 import fr.leftac.listify.model.pojo.Artist;
 import fr.leftac.listify.model.pojo.Track;
 import io.realm.Realm;
@@ -51,6 +50,7 @@ public class Controller {
                     for (int i = 0; i < res.size(); i++) {
 
                         Track t = Track.jsonToTrack(res.get(i));
+                        updateArtist(t.getArtist());
 
                         trackCallbackListener.onFetchProgress(t);
                     }
@@ -73,14 +73,45 @@ public class Controller {
         });
     }
 
-    public void saveTrackToBDD(Track track){
+    public void updateArtist(Artist artist) {
+        apiManager.getSpotifyApi().getArtist(TokenManager.getToken(), artist.getId()).enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                if (response.body() != null) {
+                    // Parse the response
+                    Log.i(TAG, response.toString());
+                    JsonObject responseBody = parser.parse(new Gson().toJson(response.body())).getAsJsonObject();
+
+                    // Get the Json Array
+                    JsonArray images = responseBody.getAsJsonArray("images");
+
+                    JsonObject img = images.get(0).getAsJsonObject();
+                    artist.setImage(img.get("url").toString().replaceAll("\"", ""));
+
+
+                } else {
+                    Log.e("searchError", "response.body is null");
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    public void saveTrackToBDD(Track track) {
         Realm realm = Realm.getDefaultInstance();
         try {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
                     Track alreadyIn = realm.where(Track.class).equalTo("id", track.getId()).findFirst();
-                    if(alreadyIn == null){
+                    if (alreadyIn == null) {
                         track.setFavDate(new Date());
                         realm.copyToRealm(track);
                     }

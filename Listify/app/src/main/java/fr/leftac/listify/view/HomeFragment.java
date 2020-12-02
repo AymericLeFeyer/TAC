@@ -66,8 +66,6 @@ public class HomeFragment extends Fragment implements Controller.TrackCallbackLi
 
         // Toolbar
         toolbar = getActivity().findViewById(R.id.toolbar);
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -140,7 +138,7 @@ public class HomeFragment extends Fragment implements Controller.TrackCallbackLi
     private void switchIcon(MenuItem item) {
         Context context = getContext();
         if(searchFragment != null){
-            if ( searchFragment.getGridLayoutManager().getSpanCount() == 3) {
+            if (searchFragment.getGridLayoutManager().getSpanCount() == 3) {
                 item.setIcon(context.getDrawable(R.drawable.ic_list));
             } else {
                 item.setIcon(context.getDrawable(R.drawable.ic_grid));

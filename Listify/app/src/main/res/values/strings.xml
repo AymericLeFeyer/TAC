@@ -6,4 +6,5 @@
     <string name="duration">Durée</string>
     <string name="popularity">Popularité</string>
     <string name="search_button">Rechercher</string>
+    <string name="logo">logo</string>
 </resources>

@@ -1,8 +1,8 @@
 package fr.leftac.listify.view;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -73,7 +73,7 @@ public class SearchFragment extends Fragment {
         list.setLayoutManager(gridLayoutManager);
 
         // specify an adapter (see also next example)
-        listAdapter = new TrackAdapter(tracks, gridLayoutManager, controller);
+        listAdapter = new TrackAdapter(tracks, gridLayoutManager, controller, getFragmentManager());
         list.setAdapter(listAdapter);
 
         // Buttons

@@ -1,19 +1,13 @@
 package fr.leftac.listify.view;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
@@ -55,7 +49,7 @@ public class FavoritesFragment extends Fragment {
         list.setLayoutManager(gridLayoutManager);
 
         tracks = controller.getSavedTracks();
-        listAdapter = new TrackAdapter(tracks, gridLayoutManager, controller);
+        listAdapter = new TrackAdapter(tracks, gridLayoutManager, controller, getFragmentManager());
         list.setAdapter(listAdapter);
 
         return view;

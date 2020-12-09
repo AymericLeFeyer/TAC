@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     Realm realm;
     Toolbar toolbar;
 
-    //TODO: use fragments instead of activities
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -48,11 +48,7 @@ public class HomeFragment extends Fragment implements Controller.TrackCallbackLi
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        NavController navController = navHostFragment.getNavController();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -85,7 +81,6 @@ public class HomeFragment extends Fragment implements Controller.TrackCallbackLi
     @Override
     public void onFetchProgress(Track track) {
         searchFragment.getTracks().add(track);
-        searchFragment.updateListAdapter();
     }
 
     @Override
@@ -126,10 +121,8 @@ public class HomeFragment extends Fragment implements Controller.TrackCallbackLi
                 searchFragment.getGridLayoutManager().setSpanCount(1);
             }
             searchFragment.getListAdapter().notifyItemRangeChanged(0,  searchFragment.getListAdapter().getItemCount());
-        }
-        if(favoritesFragment != null){
-            if (favoritesFragment.getGridLayoutManager().getSpanCount() != searchFragment.getGridLayoutManager().getSpanCount()) {
-                favoritesFragment.getGridLayoutManager().setSpanCount( searchFragment.getGridLayoutManager().getSpanCount());
+            if(favoritesFragment != null && favoritesFragment.getGridLayoutManager().getSpanCount() != searchFragment.getGridLayoutManager().getSpanCount()){
+                favoritesFragment.getGridLayoutManager().setSpanCount(searchFragment.getGridLayoutManager().getSpanCount());
                 favoritesFragment.getListAdapter().notifyItemRangeChanged(0,  favoritesFragment.getListAdapter().getItemCount());
             }
         }
@@ -139,13 +132,6 @@ public class HomeFragment extends Fragment implements Controller.TrackCallbackLi
         Context context = getContext();
         if(searchFragment != null){
             if (searchFragment.getGridLayoutManager().getSpanCount() == 3) {
-                item.setIcon(context.getDrawable(R.drawable.ic_list));
-            } else {
-                item.setIcon(context.getDrawable(R.drawable.ic_grid));
-            }
-        }
-        if(favoritesFragment != null){
-            if (favoritesFragment.getGridLayoutManager().getSpanCount() == 3) {
                 item.setIcon(context.getDrawable(R.drawable.ic_list));
             } else {
                 item.setIcon(context.getDrawable(R.drawable.ic_grid));

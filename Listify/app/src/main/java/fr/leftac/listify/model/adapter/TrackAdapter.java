@@ -53,7 +53,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.track_item_grid, parent, false);
         }
 
-        MyViewHolder vh = new MyViewHolder(view, controller);
+        MyViewHolder vh = new MyViewHolder(view);
         return vh;
     }
 
@@ -73,9 +73,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder
         holder.track = t;
         holder.title.setText(t.getName());
         holder.artist.setText(t.getArtist().getName());
-        Glide.with(holder.itemView.getContext())
-                .load(t.getAlbum().getImage())
-                .into(holder.album);
+        Glide.with(holder.itemView.getContext()).load(t.getAlbum().getImage()).fitCenter().into(holder.album);
 
         if(controller.isFavorite(t)){
             holder.favButton.setImageResource(R.drawable.ic_baseline_star_24);
@@ -118,7 +116,6 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder
 
     }
 
-
     public void updateItems(List<Track> items) {
         this.listTracks = items;
     }
@@ -132,14 +129,14 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder
         public Track track;
         public View clickable;
 
-        public MyViewHolder(View v, Controller controller) {
+        public MyViewHolder(View v) {
             super(v);
             view = v;
             title = view.findViewById(R.id.title);
             artist = view.findViewById(R.id.artist);
             album = view.findViewById(R.id.album);
             favButton = view.findViewById(R.id.favButton);
-            clickable = view.findViewById(R.id.view);
+            clickable = view.findViewById(R.id.layout);
         }
     }
 

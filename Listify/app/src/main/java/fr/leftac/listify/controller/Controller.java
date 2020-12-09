@@ -40,13 +40,11 @@ public class Controller {
             public void onResponse(Call<Object> call, Response<Object> response) {
                 if(response.body() != null){
                     // Parse the response
-                    Log.i(TAG, response.toString());
                     JsonObject responseBody = parser.parse(new Gson().toJson(response.body())).getAsJsonObject();
 
                     // Get the Json Array
                     JsonArray res = responseBody.getAsJsonObject("tracks").getAsJsonArray("items");
 
-                    // TODO: Search if we can increase the number of results (more than 20)
                     for (int i = 0; i < res.size(); i++) {
 
                         Track t = Track.jsonToTrack(res.get(i));
@@ -54,8 +52,6 @@ public class Controller {
 
                         trackCallbackListener.onFetchProgress(t);
                     }
-
-                    // TODO: Give back the array list to the activity (with act argument)
 
                 } else {
                     Log.e("searchError", "response.body is null");
@@ -79,15 +75,15 @@ public class Controller {
             public void onResponse(Call<Object> call, Response<Object> response) {
                 if (response.body() != null) {
                     // Parse the response
-                    Log.i(TAG, response.toString());
                     JsonObject responseBody = parser.parse(new Gson().toJson(response.body())).getAsJsonObject();
 
                     // Get the Json Array
                     JsonArray images = responseBody.getAsJsonArray("images");
 
-                    JsonObject img = images.get(0).getAsJsonObject();
-                    artist.setImage(img.get("url").toString().replaceAll("\"", ""));
-
+                    if(images.size() != 0){
+                        JsonObject img = images.get(0).getAsJsonObject();
+                        artist.setImage(img.get("url").toString().replaceAll("\"", ""));
+                    } else artist.setImage(null);
 
                 } else {
                     Log.e("searchError", "response.body is null");

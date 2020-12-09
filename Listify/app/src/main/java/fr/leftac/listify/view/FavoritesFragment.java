@@ -22,10 +22,12 @@ public class FavoritesFragment extends Fragment {
     public TrackAdapter listAdapter;
     private ArrayList tracks;
     private GridLayoutManager gridLayoutManager;
+    private int spanCount = 1;
 
-    public FavoritesFragment(Controller controller) {
+    public FavoritesFragment(Controller controller, int spanCount) {
         super();
         this.controller = controller;
+        this.spanCount = spanCount;
     }
 
     @Override
@@ -35,14 +37,13 @@ public class FavoritesFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_favorites, container, false);
 
         // Recycler View
-        gridLayoutManager = new GridLayoutManager(getContext(), 1);
+        gridLayoutManager = new GridLayoutManager(getContext(), spanCount);
         list = view.findViewById(R.id.favoritesList);
         list.setHasFixedSize(true);
 

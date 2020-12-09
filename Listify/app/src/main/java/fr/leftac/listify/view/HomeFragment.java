@@ -102,7 +102,7 @@ public class HomeFragment extends Fragment implements Controller.TrackCallbackLi
                 searchFragment = new SearchFragment(controller);
                 return searchFragment;
             } else {
-                favoritesFragment = new FavoritesFragment(controller);
+                favoritesFragment = new FavoritesFragment(controller, searchFragment.getGridLayoutManager().getSpanCount());
                 return favoritesFragment;
             }
         }

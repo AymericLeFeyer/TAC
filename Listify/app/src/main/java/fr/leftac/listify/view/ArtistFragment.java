@@ -45,10 +45,7 @@ public class ArtistFragment extends Fragment {
         name = view.findViewById(R.id.name);
 
         // Set
-        Log.e("url", artist.getImage());
-        Glide.with(getContext())
-                .load(artist.getImage())
-                .into(image);
+        Glide.with(getContext()).load(artist.getImage()).fitCenter().into(image);
 
         name.setText(artist.getName());
 

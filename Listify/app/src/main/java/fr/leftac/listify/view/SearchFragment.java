@@ -146,9 +146,7 @@ public class SearchFragment extends Fragment {
 
 //        Set
 
-        Glide.with(getContext())
-                .load(track.getAlbum().getImage())
-                .into(image);
+        Glide.with(getContext()).load(track.getAlbum().getImage()).fitCenter().into(image);
 
         name.setText(track.getName());
         artist.setText(track.getArtist().getName());

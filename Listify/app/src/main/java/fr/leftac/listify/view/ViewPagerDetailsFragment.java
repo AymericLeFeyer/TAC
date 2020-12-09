@@ -13,6 +13,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 import fr.leftac.listify.R;
 import fr.leftac.listify.controller.Controller;
@@ -25,6 +26,7 @@ public class ViewPagerDetailsFragment extends DialogFragment {
     TabLayout tabLayout;
     Track track;
     Controller controller;
+    DotsIndicator dotsIndicator;
 
     public ViewPagerDetailsFragment(Track track, Controller controller) {
         this.track = track;
@@ -44,6 +46,11 @@ public class ViewPagerDetailsFragment extends DialogFragment {
         viewPager = view.findViewById(R.id.pager);
         adapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(adapter);
+
+        dotsIndicator = view.findViewById(R.id.dots_indicator);
+
+        dotsIndicator.setViewPager2(viewPager);
+
     }
 
     class ViewPagerAdapter extends FragmentStateAdapter {

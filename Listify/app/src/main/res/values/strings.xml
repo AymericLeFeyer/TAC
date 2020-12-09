@@ -7,4 +7,8 @@
     <string name="popularity">Popularité</string>
     <string name="search_button">Rechercher</string>
     <string name="logo">logo</string>
+
+    <string name="details_track">Détails du titre</string>
+    <string name="details_artist">Détails de l\'artiste</string>
+    <string name="details_album">Détails de l\'album</string>
 </resources>

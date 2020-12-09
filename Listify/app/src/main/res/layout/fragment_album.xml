@@ -12,7 +12,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/details_artist"
+        android:text="@string/details_album"
         android:textColor="@color/colorPrimary"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:src="@drawable/ic_baseline_person_24"
+        android:src="@drawable/ic_baseline_image_24"
         app:layout_constraintBottom_toBottomOf="@+id/textView3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView3" />

@@ -1,13 +1,18 @@
 package fr.leftac.listify.view;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,8 +37,9 @@ public class SearchFragment extends Fragment {
     private List<Track> tracks;
     private RecyclerView list;
     private TrackAdapter listAdapter;
-    private EditText artistField;
+    private EditText searchField;
     private GridLayoutManager gridLayoutManager;
+    private ProgressBar progressBar;
 
     public SearchFragment(Controller controller) {
         super();
@@ -58,7 +64,7 @@ public class SearchFragment extends Fragment {
         // Views
         searchButton = view.findViewById(R.id.searchButton);
         list = view.findViewById(R.id.list);
-        artistField = view.findViewById(R.id.artist);
+        searchField = view.findViewById(R.id.artist);
 
         // Init variables
         if (tracks == null) tracks = new ArrayList<>();
@@ -73,16 +79,32 @@ public class SearchFragment extends Fragment {
         listAdapter = new TrackAdapter(tracks, gridLayoutManager, controller, getFragmentManager());
         list.setAdapter(listAdapter);
 
+        // Progress Bar
+        progressBar = view.findViewById(R.id.progressBar);
+
         // Buttons
         searchButton.setOnClickListener(v -> {
-            if (!artistField.getText().toString().equals("")) {
+            if (!searchField.getText().toString().equals("")) {
                 tracks = new ArrayList<>();
-                controller.searchTracks(artistField.getText().toString());
+                controller.searchTracks(searchField.getText().toString());
+                InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                progressBar.setVisibility(View.VISIBLE);
             } else {
                 Toast.makeText(getActivity(), getString(R.string.empty_searchfield), Toast.LENGTH_SHORT).show();
             }
         });
 
+        searchField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    //do what you want on the press of 'done'
+                    searchButton.performClick();
+
+                }
+                return false;
+            }
+        });
         return view;
     }
 
@@ -93,6 +115,7 @@ public class SearchFragment extends Fragment {
     public void updateListAdapter() {
         listAdapter.updateItems(tracks);
         listAdapter.notifyDataSetChanged();
+        progressBar.setVisibility(View.GONE);
     }
 
     public TrackAdapter getListAdapter() {

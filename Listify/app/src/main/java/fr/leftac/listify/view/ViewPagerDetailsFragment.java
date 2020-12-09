@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.google.android.material.tabs.TabLayout;
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 import fr.leftac.listify.R;
 import fr.leftac.listify.controller.Controller;
@@ -22,9 +23,10 @@ public class ViewPagerDetailsFragment extends DialogFragment {
 
     ViewPager2 viewPager;
     ViewPagerAdapter adapter;
-    TabLayout tabLayout;
+    ImageButton close;
     Track track;
     Controller controller;
+    DotsIndicator dotsIndicator;
 
     public ViewPagerDetailsFragment(Track track, Controller controller) {
         this.track = track;
@@ -44,6 +46,15 @@ public class ViewPagerDetailsFragment extends DialogFragment {
         viewPager = view.findViewById(R.id.pager);
         adapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(adapter);
+
+        dotsIndicator = view.findViewById(R.id.dots_indicator);
+
+        dotsIndicator.setViewPager2(viewPager);
+
+        close = view.findViewById(R.id.close);
+        close.setOnClickListener(v -> {
+            this.dismiss();
+        });
     }
 
     class ViewPagerAdapter extends FragmentStateAdapter {
@@ -53,10 +64,18 @@ public class ViewPagerDetailsFragment extends DialogFragment {
 
         @Override
         public Fragment createFragment(int position) {
-            if (position == 0) {
-                return new DetailsFragment(track, controller);
-            } else {
-                return new ArtistFragment(track.getArtist(), controller);
+            switch (position) {
+                case 0:
+                    return new DetailsFragment(track, controller, viewPager);
+
+                case 1:
+                    return new ArtistFragment(track.getArtist(), controller);
+
+
+                default:
+                    return new AlbumFragment(track.getAlbum(), controller);
+
+
             }
 
         }

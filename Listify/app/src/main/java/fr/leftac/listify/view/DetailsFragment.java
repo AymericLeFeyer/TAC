@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 
@@ -26,11 +27,13 @@ public class DetailsFragment extends Fragment {
     private TextView name, artist, album, duration, popularity;
     private ImageButton favButton;
     private Controller controller;
+    private ViewPager2 vp;
 
 
-    public DetailsFragment(Track track, Controller controller) {
+    public DetailsFragment(Track track, Controller controller, ViewPager2 vp) {
         this.track = track;
         this.controller = controller;
+        this.vp = vp;
     }
 
 
@@ -76,6 +79,14 @@ public class DetailsFragment extends Fragment {
                 controller.saveTrackToBDD(track);
                 favButton.setImageResource(R.drawable.ic_baseline_star_24);
             }
+        });
+
+        artist.setOnClickListener(v -> {
+            vp.setCurrentItem(1, true);
+        });
+
+        album.setOnClickListener(v -> {
+            vp.setCurrentItem(2, true);
         });
 
 

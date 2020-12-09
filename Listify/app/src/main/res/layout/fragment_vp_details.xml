@@ -9,7 +9,7 @@
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:layout_marginBottom="20dp" />
 
     <ImageButton
@@ -17,8 +17,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="top|end"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="3dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
         android:background="@null"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_baseline_close_24" />

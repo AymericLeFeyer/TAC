@@ -2,11 +2,8 @@ package fr.leftac.listify.model.pojo;
 
 import com.google.gson.JsonElement;
 
-import java.util.List;
-
 import io.realm.RealmList;
 import io.realm.RealmObject;
-import io.realm.annotations.Required;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -51,14 +48,6 @@ public class Album extends RealmObject {
         this.tracks = tracks;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public static Album jsonToAlbum(JsonElement res, Artist artist) {
         Album a = new Album();
 
@@ -83,8 +72,33 @@ public class Album extends RealmObject {
                 .replaceAll("\"", "");
         a.setImage(image);
 
+        String id = res.getAsJsonObject()
+                .get("album")
+                .getAsJsonObject()
+                .get("id")
+                .toString()
+                .replaceAll("\"", "");
+        a.setId(id);
+
+
         return a;
 
 
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

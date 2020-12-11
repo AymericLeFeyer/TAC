@@ -22,5 +22,8 @@ public interface SpotifyApi {
     @GET(V1 + "artists/{id}")
     Call<Object> getArtist(@Header("Authorization") String token, @Path("id") String id);
 
+    @GET(V1 + "albums/{id}")
+    Call<Object> getAlbum(@Header("Authorization") String token, @Path("id") String id);
+
 
 }

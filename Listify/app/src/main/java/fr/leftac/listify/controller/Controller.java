@@ -14,6 +14,7 @@ import java.util.Date;
 
 import fr.leftac.listify.model.api.ApiManager;
 import fr.leftac.listify.model.api.TokenManager;
+import fr.leftac.listify.model.pojo.Album;
 import fr.leftac.listify.model.pojo.Artist;
 import fr.leftac.listify.model.pojo.Track;
 import io.realm.Realm;
@@ -52,6 +53,7 @@ public class Controller {
 
                         Track t = Track.jsonToTrack(res.get(i));
                         updateArtist(t.getArtist());
+                        updateAlbum(t.getAlbum());
 
                         trackCallbackListener.onFetchProgress(t);
                     }
@@ -110,6 +112,44 @@ public class Controller {
                     Log.e("searchError", "response.body is null");
                 }
 
+
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void updateAlbum(Album album) {
+        apiManager.getSpotifyApi().getAlbum(TokenManager.getToken(), album.getId()).enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                if (response.body() != null) {
+                    // Parse the response
+                    JsonObject responseBody = parser.parse(new Gson().toJson(response.body())).getAsJsonObject();
+
+                    // Update tracks
+                    JsonObject tracks = responseBody.getAsJsonObject("tracks");
+                    JsonArray items = tracks.getAsJsonArray("items");
+
+                    RealmList<Track> g = new RealmList<>();
+                    for (JsonElement t : items) {
+                        JsonObject track = t.getAsJsonObject();
+                        Track newTrack = new Track();
+                        newTrack.setId(track.getAsJsonPrimitive("id").getAsString());
+                        newTrack.setName(track.getAsJsonPrimitive("name").getAsString());
+                        newTrack.setArtist(album.getArtist());
+                        newTrack.setAlbum(album);
+                        g.add(newTrack);
+                    }
+                    album.setTracks(g);
+
+
+                } else {
+                    Log.e("searchError", "response.body is null");
+                }
 
             }
 

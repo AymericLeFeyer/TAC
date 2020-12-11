@@ -4,8 +4,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,6 +17,7 @@ import fr.leftac.listify.model.api.TokenManager;
 import fr.leftac.listify.model.pojo.Artist;
 import fr.leftac.listify.model.pojo.Track;
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -77,13 +80,31 @@ public class Controller {
                     // Parse the response
                     JsonObject responseBody = parser.parse(new Gson().toJson(response.body())).getAsJsonObject();
 
-                    // Get the Json Array
+                    // Update image
                     JsonArray images = responseBody.getAsJsonArray("images");
 
-                    if(images.size() != 0){
+                    if (images.size() != 0) {
                         JsonObject img = images.get(0).getAsJsonObject();
                         artist.setImage(img.get("url").toString().replaceAll("\"", ""));
                     } else artist.setImage(null);
+
+
+                    // Update popularity
+                    JsonPrimitive popularity = responseBody.getAsJsonPrimitive("popularity");
+                    artist.setPopularity(popularity.getAsInt());
+
+                    // Update followers
+                    JsonObject followers = responseBody.getAsJsonObject("followers");
+                    artist.setFollowers(followers.getAsJsonPrimitive("total").getAsInt());
+
+                    // Update genres
+                    JsonArray genres = responseBody.getAsJsonArray("genres");
+                    RealmList<String> g = new RealmList<>();
+                    for (JsonElement genre : genres) {
+                        g.add(genre.getAsString());
+                    }
+                    artist.setGenres(g);
+
 
                 } else {
                     Log.e("searchError", "response.body is null");

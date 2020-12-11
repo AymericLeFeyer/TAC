@@ -1,7 +1,6 @@
 package fr.leftac.listify.view;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +44,6 @@ public class AlbumFragment extends Fragment {
         name = view.findViewById(R.id.name);
 
         // Set
-        Log.e("url", album.getImage());
         Glide.with(getContext())
                 .load(album.getImage())
                 .into(image);

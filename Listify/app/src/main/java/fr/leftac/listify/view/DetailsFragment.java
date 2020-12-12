@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 
 import fr.leftac.listify.R;
 import fr.leftac.listify.controller.Controller;
+import fr.leftac.listify.model.DataFormatter;
 import fr.leftac.listify.model.pojo.Track;
 
 public class DetailsFragment extends Fragment {
@@ -97,16 +98,10 @@ public class DetailsFragment extends Fragment {
         name.setText(track.getName());
         artist.setText(track.getArtist().getName());
         album.setText(track.getAlbum().getName());
-        int durationValue = track.getDuration() / 1000;
-        String durationText = durationValue / 60 + ":" + (durationValue % 60 < 10 ? "0" : "") + durationValue % 60;
-        duration.setText(durationText);
-        String popularityText = track.getPopularity()+" %";
+        duration.setText(DataFormatter.duration(track.getDuration()));
+        String popularityText = DataFormatter.popularity(track.getPopularity());
         popularity.setText(popularityText);
         popularity.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-
-
-
-
 
 
     }

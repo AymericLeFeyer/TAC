@@ -1,7 +1,6 @@
 package fr.leftac.listify.view;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +15,14 @@ import com.bumptech.glide.Glide;
 
 import fr.leftac.listify.R;
 import fr.leftac.listify.controller.Controller;
+import fr.leftac.listify.model.DataFormatter;
 import fr.leftac.listify.model.pojo.Artist;
 
 public class ArtistFragment extends Fragment {
     private Artist artist;
     private Controller controller;
 
-    private TextView name;
+    private TextView name, popularity, followers, genres;
     private ImageView image;
 
     public ArtistFragment(Artist artist, Controller controller) {
@@ -43,9 +43,15 @@ public class ArtistFragment extends Fragment {
         // Init
         image = view.findViewById(R.id.image);
         name = view.findViewById(R.id.name);
+        followers = view.findViewById(R.id.followers);
+        genres = view.findViewById(R.id.genres);
+        popularity = view.findViewById(R.id.popularity);
 
         // Set
-        Glide.with(getContext()).load(artist.getImage()).fitCenter().into(image);
+        Glide.with(requireContext()).load(artist.getImage()).fitCenter().into(image);
+        popularity.setText(DataFormatter.popularity(artist.getPopularity()));
+        genres.setText(DataFormatter.genres(artist.getGenres()));
+        followers.setText(DataFormatter.followers(artist.getFollowers()));
 
         name.setText(artist.getName());
 

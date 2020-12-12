@@ -2,6 +2,7 @@ package fr.leftac.listify.model.pojo;
 
 import com.google.gson.JsonElement;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,33 @@ public class Artist extends RealmObject {
     public String id;
     private String name;
     private String image;
+    private int followers;
+    private RealmList<String> genres;
+    private int popularity;
+
+    public int getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(int followers) {
+        this.followers = followers;
+    }
+
+    public RealmList<String> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(RealmList<String> genres) {
+        this.genres = genres;
+    }
+
+    public int getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(int popularity) {
+        this.popularity = popularity;
+    }
 
     public Artist() {
         this.name = "";

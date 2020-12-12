@@ -55,7 +55,7 @@ public class AlbumFragment extends Fragment {
 
         list.setLayoutManager(gridLayoutManager);
 
-        List<Track> tracks = album.getTracks();
+        List<Track> tracks = controller.getSavedTracks();
         AlbumTracksAdapter listAdapter = new AlbumTracksAdapter(tracks, controller, getFragmentManager());
         list.setAdapter(listAdapter);
 

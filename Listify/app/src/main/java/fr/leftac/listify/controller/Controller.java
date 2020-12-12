@@ -53,7 +53,7 @@ public class Controller {
 
                         Track t = Track.jsonToTrack(res.get(i));
                         updateArtist(t.getArtist());
-                        updateAlbum(t.getAlbum());
+//                        updateAlbum(t.getAlbum());
 
                         trackCallbackListener.onFetchProgress(t);
                     }
@@ -140,8 +140,8 @@ public class Controller {
                         Track newTrack = new Track();
                         newTrack.setId(track.getAsJsonPrimitive("id").getAsString());
                         newTrack.setName(track.getAsJsonPrimitive("name").getAsString());
-                        newTrack.setArtist(album.getArtist());
-                        newTrack.setAlbum(album);
+//                        newTrack.setArtist(album.getArtist());
+//                        newTrack.setAlbum(album);
                         g.add(newTrack);
                     }
                     album.setTracks(g);

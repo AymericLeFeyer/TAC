@@ -1,36 +1,25 @@
 package fr.leftac.listify.model.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import fr.leftac.listify.R;
-import fr.leftac.listify.controller.Controller;
 import fr.leftac.listify.model.pojo.Track;
-import fr.leftac.listify.view.ViewPagerDetailsFragment;
 
 public class AlbumTracksAdapter extends RecyclerView.Adapter<AlbumTracksAdapter.MyViewHolder> {
     private List<Track> listTracks;
 
-    private Controller controller;
-    private Context context;
-    private FragmentManager fm;
 
-
-    public AlbumTracksAdapter(List<Track> listTracks, Controller controller, FragmentManager fragmentManager) {
+    public AlbumTracksAdapter(List<Track> listTracks) {
         this.listTracks = listTracks;
 
-        this.controller = controller;
-        this.fm = fragmentManager;
     }
 
     @NonNull
@@ -38,8 +27,7 @@ public class AlbumTracksAdapter extends RecyclerView.Adapter<AlbumTracksAdapter.
     public AlbumTracksAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.track_album_list, parent, false);
 
-        MyViewHolder vh = new MyViewHolder(view);
-        return vh;
+        return new MyViewHolder(view);
     }
 
 
@@ -58,15 +46,6 @@ public class AlbumTracksAdapter extends RecyclerView.Adapter<AlbumTracksAdapter.
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-        context = recyclerView.getContext();
-    }
-
-    public void openDetailsFragment(Track track) {
-
-        // Create and show the dialog.
-        DialogFragment newFragment = new ViewPagerDetailsFragment(track, controller);
-        newFragment.show(fm, "dialog");
-
     }
 
 

@@ -15,6 +15,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
+import org.jetbrains.annotations.NotNull;
+
 import fr.leftac.listify.R;
 import fr.leftac.listify.controller.Controller;
 import fr.leftac.listify.model.pojo.Track;
@@ -52,9 +54,7 @@ public class ViewPagerDetailsFragment extends DialogFragment {
         dotsIndicator.setViewPager2(viewPager);
 
         close = view.findViewById(R.id.close);
-        close.setOnClickListener(v -> {
-            this.dismiss();
-        });
+        close.setOnClickListener(v -> this.dismiss());
     }
 
     class ViewPagerAdapter extends FragmentStateAdapter {
@@ -62,6 +62,7 @@ public class ViewPagerDetailsFragment extends DialogFragment {
             super(fa);
         }
 
+        @NotNull
         @Override
         public Fragment createFragment(int position) {
             switch (position) {
@@ -69,11 +70,11 @@ public class ViewPagerDetailsFragment extends DialogFragment {
                     return new DetailsFragment(track, controller, viewPager);
 
                 case 1:
-                    return new ArtistFragment(track.getArtist(), controller);
+                    return new ArtistFragment(track.getArtist());
 
 
                 default:
-                    return new AlbumFragment(track.getAlbum(), controller);
+                    return new AlbumFragment(track.getAlbum());
 
 
             }

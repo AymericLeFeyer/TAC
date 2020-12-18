@@ -1,7 +1,8 @@
 package fr.leftac.listify.view;
 
-import android.app.AlertDialog;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -11,16 +12,12 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +32,6 @@ public class SearchFragment extends Fragment {
     private Button searchButton;
     private Controller controller;
     private List<Track> tracks;
-    private RecyclerView list;
     private TrackAdapter listAdapter;
     private EditText searchField;
     private GridLayoutManager gridLayoutManager;
@@ -63,7 +59,7 @@ public class SearchFragment extends Fragment {
 
         // Views
         searchButton = view.findViewById(R.id.searchButton);
-        list = view.findViewById(R.id.list);
+        RecyclerView list = view.findViewById(R.id.list);
         searchField = view.findViewById(R.id.artist);
 
         // Init variables
@@ -84,26 +80,33 @@ public class SearchFragment extends Fragment {
 
         // Buttons
         searchButton.setOnClickListener(v -> {
-            if (!searchField.getText().toString().equals("")) {
-                tracks = new ArrayList<>();
-                controller.searchTracks(searchField.getText().toString());
-                InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                progressBar.setVisibility(View.VISIBLE);
+            if (isNetworkAvailable()) {
+                if (!searchField.getText().toString().equals("")) {
+                    tracks = new ArrayList<>();
+                    controller.searchTracks(searchField.getText().toString());
+                    InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    progressBar.setVisibility(View.VISIBLE);
+                } else {
+                    if (getActivity() != null) {
+                        Toast.makeText(getActivity(), getString(R.string.empty_searchfield), Toast.LENGTH_SHORT).show();
+                    }
+                }
             } else {
-                Toast.makeText(getActivity(), getString(R.string.empty_searchfield), Toast.LENGTH_SHORT).show();
+                if (getActivity() != null) {
+                    Toast.makeText(getActivity(), getString(R.string.no_connection), Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
-        searchField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
-                    //do what you want on the press of 'done'
-                    searchButton.performClick();
+        searchField.setOnEditorActionListener((v, actionId, event) -> {
+            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                //do what you want on the press of 'done'
+                searchButton.performClick();
 
-                }
-                return false;
             }
+            return false;
         });
         return view;
     }
@@ -118,6 +121,13 @@ public class SearchFragment extends Fragment {
         progressBar.setVisibility(View.GONE);
     }
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) requireContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
     public TrackAdapter getListAdapter() {
         return listAdapter;
     }
@@ -126,41 +136,4 @@ public class SearchFragment extends Fragment {
         return gridLayoutManager;
     }
 
-    public void openDetailsFragment(Track track) {
-//        DetailsFragment detailsFragment = new DetailsFragment(t);
-//        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, detailsFragment).addToBackStack(null).commit();
-
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getContext());
-        LayoutInflater inflater = this.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.fragment_details, null);
-        dialogBuilder.setView(dialogView);
-
-        //        Init
-
-        ImageView image = dialogView.findViewById(R.id.image);
-        TextView name = dialogView.findViewById(R.id.name);
-        TextView artist = dialogView.findViewById(R.id.artist);
-        TextView album = dialogView.findViewById(R.id.album);
-        TextView duration = dialogView.findViewById(R.id.duration);
-        TextView popularity = dialogView.findViewById(R.id.popularity);
-
-//        Set
-
-        Glide.with(getContext()).load(track.getAlbum().getImage()).fitCenter().into(image);
-
-        name.setText(track.getName());
-        artist.setText(track.getArtist().getName());
-        album.setText(track.getAlbum().getName());
-        int durationValue = track.getDuration() / 1000;
-        String durationText = durationValue / 60 + ":" + (durationValue % 60 < 10 ? "0" : "") + durationValue % 60;
-        duration.setText(durationText);
-        String popularityText = track.getPopularity()+" %";
-        popularity.setText(popularityText);
-
-
-        AlertDialog alertDialog = dialogBuilder.create();
-        alertDialog.show();
-
-
-    }
 }

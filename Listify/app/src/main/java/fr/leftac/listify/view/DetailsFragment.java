@@ -24,9 +24,6 @@ import fr.leftac.listify.model.pojo.Track;
 public class DetailsFragment extends Fragment {
 
     private Track track;
-
-    private ImageView image;
-    private TextView name, artist, album, duration, popularity;
     private ImageButton favButton;
     private Controller controller;
     private ViewPager2 vp;
@@ -59,12 +56,12 @@ public class DetailsFragment extends Fragment {
 
 //        Init
 
-        image = view.findViewById(R.id.image);
-        name = view.findViewById(R.id.name);
-        artist = view.findViewById(R.id.artist);
-        album = view.findViewById(R.id.album);
-        duration = view.findViewById(R.id.duration);
-        popularity = view.findViewById(R.id.popularity);
+        ImageView image = view.findViewById(R.id.image);
+        TextView name = view.findViewById(R.id.name);
+        TextView artist = view.findViewById(R.id.artist);
+        TextView album = view.findViewById(R.id.album);
+        TextView duration = view.findViewById(R.id.duration);
+        TextView popularity = view.findViewById(R.id.popularity);
         favButton = view.findViewById(R.id.imageButton);
 
         if (controller.isFavorite(track)) {
@@ -86,18 +83,14 @@ public class DetailsFragment extends Fragment {
             }
         });
 
-        artist.setOnClickListener(v -> {
-            vp.setCurrentItem(1, true);
-        });
+        artist.setOnClickListener(v -> vp.setCurrentItem(1, true));
 
-        album.setOnClickListener(v -> {
-            vp.setCurrentItem(2, true);
-        });
+        album.setOnClickListener(v -> vp.setCurrentItem(2, true));
 
 
 //        Set
 
-        Glide.with(getContext()).load(track.getAlbum().getImage()).fitCenter().into(image);
+        Glide.with(requireContext()).load(track.getAlbum().getImage()).fitCenter().into(image);
 
         name.setText(track.getName());
         artist.setText(track.getArtist().getName());

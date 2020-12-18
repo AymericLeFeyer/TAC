@@ -1,6 +1,5 @@
 package fr.leftac.listify.model.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,11 +26,8 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder
     private List<Track> listTracks;
     private GridLayoutManager layoutManager;
     private Controller controller;
-    private Context context;
     private FragmentManager fm;
 
-    private static final int SEARCH_VIEW_TYPE = 0;
-    private static final int FAVORITES_VIEW_TYPE = 1;
     private static final int VIEW_TYPE_ROW = 1;
     private static final int VIEW_TYPE_COLUMN = 2;
 
@@ -45,7 +41,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder
     @NonNull
     @Override
     public TrackAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = null;
+        View view;
 
         if (viewType == VIEW_TYPE_ROW) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.track_item_list, parent, false);
@@ -53,8 +49,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.track_item_grid, parent, false);
         }
 
-        MyViewHolder vh = new MyViewHolder(view);
-        return vh;
+        return new MyViewHolder(view);
     }
 
     @Override
@@ -91,9 +86,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder
             });
         }
 
-        holder.clickable.setOnClickListener(v -> {
-            openDetailsFragment(holder.track);
-        });
+        holder.clickable.setOnClickListener(v -> openDetailsFragment(holder.track));
 
     }
 
@@ -105,7 +98,6 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-        context = recyclerView.getContext();
     }
 
     public void openDetailsFragment(Track track) {

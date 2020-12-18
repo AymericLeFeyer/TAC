@@ -7,6 +7,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import org.jetbrains.annotations.NotNull;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,7 +37,7 @@ public class TokenManager {
 
         api.token("client_credentials", basicAuth).enqueue(new Callback() {
             @Override
-            public void onResponse(Call call, Response response) {
+            public void onResponse(@NotNull Call call, @NotNull Response response) {
                 // Initialize a parser
                 JsonParser parser = new JsonParser();
                 // Parse the response
@@ -49,7 +51,7 @@ public class TokenManager {
             }
 
             @Override
-            public void onFailure(Call call, Throwable t) {
+            public void onFailure(@NotNull Call call, @NotNull Throwable t) {
                 t.printStackTrace();
                 Log.e(TAG, "une erreur est survenue");
             }
@@ -59,6 +61,10 @@ public class TokenManager {
 
     public static String getToken() {
         return token;
+    }
+
+    public static boolean isTokenValid() {
+        return !(token == null);
     }
 
 }

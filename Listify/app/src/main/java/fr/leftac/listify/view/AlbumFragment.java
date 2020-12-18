@@ -18,21 +18,15 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import fr.leftac.listify.R;
-import fr.leftac.listify.controller.Controller;
 import fr.leftac.listify.model.adapter.AlbumTracksAdapter;
 import fr.leftac.listify.model.pojo.Album;
 import fr.leftac.listify.model.pojo.Track;
 
 public class AlbumFragment extends Fragment {
     private Album album;
-    private Controller controller;
 
-    private TextView name;
-    private ImageView image;
-
-    public AlbumFragment(Album album, Controller controller) {
+    public AlbumFragment(Album album) {
         this.album = album;
-        this.controller = controller;
     }
 
     @Nullable
@@ -46,8 +40,8 @@ public class AlbumFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Init
-        image = view.findViewById(R.id.image);
-        name = view.findViewById(R.id.name);
+        ImageView image = view.findViewById(R.id.image);
+        TextView name = view.findViewById(R.id.name);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
         RecyclerView list = view.findViewById(R.id.tracks);
@@ -56,7 +50,7 @@ public class AlbumFragment extends Fragment {
         list.setLayoutManager(gridLayoutManager);
 
         List<Track> tracks = album.getTracks();
-        AlbumTracksAdapter listAdapter = new AlbumTracksAdapter(tracks, controller, getFragmentManager());
+        AlbumTracksAdapter listAdapter = new AlbumTracksAdapter(tracks);
         list.setAdapter(listAdapter);
 
         // Set

@@ -1,5 +1,7 @@
 package fr.leftac.listify;
 
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +15,9 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.Objects;
+
+import fr.leftac.listify.controller.ConnectivityStatusReceiver;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -22,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
     NavController navController;
     NavHostFragment navHostFragment;
     NavigationView navigationView;
-    Realm realm;
     Toolbar toolbar;
+    ConnectivityStatusReceiver connectivityStatusReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +36,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        navController = navHostFragment.getNavController();
+        if (navHostFragment != null) {
+            navController = navHostFragment.getNavController();
+        }
+
 
         appBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_graph, R.id.nav_host_fragment).build();
 
@@ -49,7 +57,9 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+
+        connectivityStatusReceiver = new ConnectivityStatusReceiver();
     }
 
     @Override
@@ -63,5 +73,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(connectivityStatusReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (connectivityStatusReceiver != null) {
+            // unregister receiver
+            unregisterReceiver(connectivityStatusReceiver);
+        }
     }
 }

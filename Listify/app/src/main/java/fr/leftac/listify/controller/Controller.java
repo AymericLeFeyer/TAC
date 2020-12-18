@@ -9,6 +9,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -25,7 +27,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Controller {
-    private static final String TAG = Controller.class.getSimpleName();
     private TrackCallbackListener trackCallbackListener;
     private ApiManager apiManager;
     private JsonParser parser;
@@ -41,8 +42,8 @@ public class Controller {
         // Call the API
         apiManager.getSpotifyApi().searchTracks(TokenManager.getToken(), q, "track").enqueue(new Callback<Object>() {
             @Override
-            public void onResponse(Call<Object> call, Response<Object> response) {
-                if(response.body() != null){
+            public void onResponse(@NotNull Call<Object> call, @NotNull Response<Object> response) {
+                if (response.body() != null) {
                     // Parse the response
                     JsonObject responseBody = parser.parse(new Gson().toJson(response.body())).getAsJsonObject();
 
@@ -68,7 +69,7 @@ public class Controller {
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(@NotNull Call<Object> call, @NotNull Throwable t) {
 
             }
         });
@@ -77,7 +78,7 @@ public class Controller {
     public void updateArtist(Artist artist) {
         apiManager.getSpotifyApi().getArtist(TokenManager.getToken(), artist.getId()).enqueue(new Callback<Object>() {
             @Override
-            public void onResponse(Call<Object> call, Response<Object> response) {
+            public void onResponse(@NotNull Call<Object> call, @NotNull Response<Object> response) {
                 if (response.body() != null) {
                     // Parse the response
                     JsonObject responseBody = parser.parse(new Gson().toJson(response.body())).getAsJsonObject();
@@ -116,7 +117,7 @@ public class Controller {
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(@NotNull Call<Object> call, @NotNull Throwable t) {
 
             }
         });
@@ -125,7 +126,7 @@ public class Controller {
     public void updateAlbum(Album album) {
         apiManager.getSpotifyApi().getAlbum(TokenManager.getToken(), album.getId()).enqueue(new Callback<Object>() {
             @Override
-            public void onResponse(Call<Object> call, Response<Object> response) {
+            public void onResponse(@NotNull Call<Object> call, @NotNull Response<Object> response) {
                 if (response.body() != null) {
                     // Parse the response
                     JsonObject responseBody = parser.parse(new Gson().toJson(response.body())).getAsJsonObject();
@@ -154,7 +155,7 @@ public class Controller {
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(@NotNull Call<Object> call, @NotNull Throwable t) {
 
             }
         });
@@ -162,82 +163,57 @@ public class Controller {
 
 
     public void saveTrackToBDD(Track track) {
-        Realm realm = Realm.getDefaultInstance();
 
-        try {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    Track alreadyIn = realm.where(Track.class).equalTo("id", track.getId()).equalTo("favorite", true).findFirst();
-                    if (alreadyIn == null) {
-                        track.setFavDate(new Date());
-                        realm.copyToRealm(track);
-                    }
+        try (Realm realm = Realm.getDefaultInstance()) {
+            realm.executeTransaction(realm1 -> {
+                Track alreadyIn = realm1.where(Track.class).equalTo("id", track.getId()).equalTo("favorite", true).findFirst();
+                if (alreadyIn == null) {
+                    track.setFavDate(new Date());
+                    realm1.copyToRealm(track);
                 }
             });
-        } finally {
-            realm.close();
         }
         trackCallbackListener.onFetchComplete();
     }
 
-    public void removeTrackFromBDD(Track track){
-        Realm realm = Realm.getDefaultInstance();
-        try {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    Track result = realm.where(Track.class).equalTo("id", track.getId()).equalTo("favorite", true).findFirst();
-                    if(result != null){
-                        track.setFavorite(false);
-                        track.setFavDate(null);
-                        result.deleteFromRealm();
-                    }
+    public void removeTrackFromBDD(Track track) {
+        try (Realm realm = Realm.getDefaultInstance()) {
+            realm.executeTransaction(realm1 -> {
+                Track result = realm1.where(Track.class).equalTo("id", track.getId()).equalTo("favorite", true).findFirst();
+                if (result != null) {
+                    track.setFavorite(false);
+                    track.setFavDate(null);
+                    result.deleteFromRealm();
                 }
             });
-        } finally {
-            realm.close();
         }
         trackCallbackListener.onFetchComplete();
     }
 
-    public ArrayList<Track> getSavedTracks(){
+    public ArrayList<Track> getSavedTracks() {
         ArrayList<Track> savedTracks = new ArrayList<>();
-        Realm realm = Realm.getDefaultInstance();
-        try {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    RealmResults<Track> results = realm.where(Track.class).equalTo("favorite", true).findAll();
-                    savedTracks.addAll(realm.copyFromRealm(results));
-                }
+        try (Realm realm = Realm.getDefaultInstance()) {
+            realm.executeTransaction(realm1 -> {
+                RealmResults<Track> results = realm1.where(Track.class).equalTo("favorite", true).findAll();
+                savedTracks.addAll(realm1.copyFromRealm(results));
             });
-        } finally {
-            realm.close();
         }
         return savedTracks;
     }
 
     public boolean isFavorite(Track t) {
         isFav = false;
-        Realm realm = Realm.getDefaultInstance();
-        try {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    Track result = realm.where(Track.class).equalTo("id", t.getId()).equalTo("favorite", true).findFirst();
-                    if(result != null) isFav = true;
-                }
+        try (Realm realm = Realm.getDefaultInstance()) {
+            realm.executeTransaction(realm1 -> {
+                Track result = realm1.where(Track.class).equalTo("id", t.getId()).equalTo("favorite", true).findFirst();
+                if (result != null) isFav = true;
             });
-        } finally {
-            realm.close();
         }
         return isFav;
     }
 
     public interface TrackCallbackListener {
         void onFetchProgress(Track track);
-
         void onFetchComplete();
     }
 }

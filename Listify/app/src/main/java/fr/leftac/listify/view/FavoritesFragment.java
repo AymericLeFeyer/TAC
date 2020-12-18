@@ -18,11 +18,9 @@ import fr.leftac.listify.model.adapter.TrackAdapter;
 public class FavoritesFragment extends Fragment {
 
     private Controller controller;
-    private RecyclerView list;
     public TrackAdapter listAdapter;
-    private ArrayList tracks;
     private GridLayoutManager gridLayoutManager;
-    private int spanCount = 1;
+    private int spanCount;
 
     public FavoritesFragment(Controller controller, int spanCount) {
         super();
@@ -44,12 +42,12 @@ public class FavoritesFragment extends Fragment {
 
         // Recycler View
         gridLayoutManager = new GridLayoutManager(getContext(), spanCount);
-        list = view.findViewById(R.id.favoritesList);
+        RecyclerView list = view.findViewById(R.id.favoritesList);
         list.setHasFixedSize(true);
 
         list.setLayoutManager(gridLayoutManager);
 
-        tracks = controller.getSavedTracks();
+        ArrayList<fr.leftac.listify.model.pojo.Track> tracks = controller.getSavedTracks();
         listAdapter = new TrackAdapter(tracks, gridLayoutManager, controller, getFragmentManager());
         list.setAdapter(listAdapter);
 
@@ -57,8 +55,7 @@ public class FavoritesFragment extends Fragment {
     }
 
     public void updateListAdapter(){
-        tracks = controller.getSavedTracks();
-        listAdapter.updateItems(tracks);
+        listAdapter.updateItems(controller.getSavedTracks());
         listAdapter.notifyDataSetChanged();
     }
 

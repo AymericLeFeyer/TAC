@@ -14,20 +14,15 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 
 import fr.leftac.listify.R;
-import fr.leftac.listify.controller.Controller;
 import fr.leftac.listify.model.DataFormatter;
 import fr.leftac.listify.model.pojo.Artist;
 
 public class ArtistFragment extends Fragment {
     private Artist artist;
-    private Controller controller;
 
-    private TextView name, popularity, followers, genres;
-    private ImageView image;
-
-    public ArtistFragment(Artist artist, Controller controller) {
+    public ArtistFragment(Artist artist) {
         this.artist = artist;
-        this.controller = controller;
+
     }
 
     @Nullable
@@ -41,11 +36,11 @@ public class ArtistFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Init
-        image = view.findViewById(R.id.image);
-        name = view.findViewById(R.id.name);
-        followers = view.findViewById(R.id.followers);
-        genres = view.findViewById(R.id.genres);
-        popularity = view.findViewById(R.id.popularity);
+        ImageView image = view.findViewById(R.id.image);
+        TextView name = view.findViewById(R.id.name);
+        TextView followers = view.findViewById(R.id.followers);
+        TextView genres = view.findViewById(R.id.genres);
+        TextView popularity = view.findViewById(R.id.popularity);
 
         // Set
         Glide.with(requireContext()).load(artist.getImage()).fitCenter().into(image);

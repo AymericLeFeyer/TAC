@@ -70,7 +70,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder
         holder.artist.setText(t.getArtist().getName());
         Glide.with(holder.itemView.getContext()).load(t.getAlbum().getImage()).fitCenter().into(holder.album);
 
-        if(controller.isFavorite(t)){
+        if(t.isFavorite()){
             holder.favButton.setImageResource(R.drawable.ic_baseline_star_24);
             holder.favButton.setOnClickListener(a -> {
                 t.setFavorite(false);

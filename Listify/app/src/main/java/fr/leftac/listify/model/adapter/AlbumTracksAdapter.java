@@ -6,20 +6,26 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import java.util.List;
 
 import fr.leftac.listify.R;
+import fr.leftac.listify.controller.Controller;
 import fr.leftac.listify.model.pojo.Track;
 
 public class AlbumTracksAdapter extends RecyclerView.Adapter<AlbumTracksAdapter.MyViewHolder> {
     private List<Track> listTracks;
+    private ViewPager2 viewPager;
+    private Controller controller;
 
 
-    public AlbumTracksAdapter(List<Track> listTracks) {
+    public AlbumTracksAdapter(List<Track> listTracks, ViewPager2 viewPager, Controller controller) {
         this.listTracks = listTracks;
-
+        this.viewPager = viewPager;
+        this.controller = controller;
     }
 
     @NonNull
@@ -36,6 +42,13 @@ public class AlbumTracksAdapter extends RecyclerView.Adapter<AlbumTracksAdapter.
         Track t = listTracks.get(position);
         holder.track = t;
         holder.title.setText(t.getName());
+        holder.layout.setOnClickListener(v -> {
+            controller.changeTrackDetails(t);
+            viewPager.setCurrentItem(0, true);
+
+        });
+
+
     }
 
     @Override
@@ -53,11 +66,13 @@ public class AlbumTracksAdapter extends RecyclerView.Adapter<AlbumTracksAdapter.
         public final View view;
         public TextView title;
         public Track track;
+        public ConstraintLayout layout;
 
         public MyViewHolder(View v) {
             super(v);
             view = v;
             title = view.findViewById(R.id.title);
+            layout = view.findViewById(R.id.layout);
         }
     }
 

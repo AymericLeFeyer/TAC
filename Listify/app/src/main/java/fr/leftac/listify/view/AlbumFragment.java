@@ -1,5 +1,6 @@
 package fr.leftac.listify.view;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,21 +13,30 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 import fr.leftac.listify.R;
+import fr.leftac.listify.controller.Controller;
 import fr.leftac.listify.model.adapter.AlbumTracksAdapter;
 import fr.leftac.listify.model.pojo.Album;
 import fr.leftac.listify.model.pojo.Track;
 
 public class AlbumFragment extends Fragment {
     private Album album;
+    private Controller controller;
+    private ViewPager2 viewPager;
 
-    public AlbumFragment(Album album) {
+    private DataListener dataListener;
+
+    public AlbumFragment(Album album, Controller controller, ViewPager2 viewPager) {
         this.album = album;
+        this.controller = controller;
+        this.viewPager = viewPager;
+
     }
 
     @Nullable
@@ -50,7 +60,7 @@ public class AlbumFragment extends Fragment {
         list.setLayoutManager(gridLayoutManager);
 
         List<Track> tracks = album.getTracks();
-        AlbumTracksAdapter listAdapter = new AlbumTracksAdapter(tracks);
+        AlbumTracksAdapter listAdapter = new AlbumTracksAdapter(tracks, viewPager, controller);
         list.setAdapter(listAdapter);
 
         // Set
@@ -62,4 +72,22 @@ public class AlbumFragment extends Fragment {
 
 
     }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            dataListener = (DataListener) context;
+        } catch (Exception ignored) {
+
+        }
+    }
+
+    public interface DataListener {
+
+        public void onDataReceived(Track track);
+
+    }
+
+
 }

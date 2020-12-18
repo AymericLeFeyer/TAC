@@ -72,7 +72,7 @@ public class TokenManager {
     public static boolean isTokenValid() {
         if (generatedAt == null) return false;
 
-        boolean expired = ((new Date().getTime() - generatedAt.getTime()) / (1000 * 60)) >= 1;
+        boolean expired = ((new Date().getTime() - generatedAt.getTime()) / (1000 * 60)) >= 60;
 
         return (token != null && !expired);
     }

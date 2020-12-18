@@ -57,7 +57,13 @@ public class ViewPagerDetailsFragment extends DialogFragment {
         close.setOnClickListener(v -> this.dismiss());
     }
 
-    class ViewPagerAdapter extends FragmentStateAdapter {
+
+    class ViewPagerAdapter extends FragmentStateAdapter implements Controller.TrackCallbackListener {
+        DetailsFragment details = new DetailsFragment(track, controller, viewPager);
+        ArtistFragment artist = new ArtistFragment(track.getArtist());
+        AlbumFragment album = new AlbumFragment(track.getAlbum(), new Controller(this), viewPager);
+
+
         public ViewPagerAdapter(ViewPagerDetailsFragment fa) {
             super(fa);
         }
@@ -65,16 +71,16 @@ public class ViewPagerDetailsFragment extends DialogFragment {
         @NotNull
         @Override
         public Fragment createFragment(int position) {
+
             switch (position) {
                 case 0:
-                    return new DetailsFragment(track, controller, viewPager);
+                    return details;
 
                 case 1:
-                    return new ArtistFragment(track.getArtist());
-
+                    return artist;
 
                 default:
-                    return new AlbumFragment(track.getAlbum());
+                    return album;
 
 
             }
@@ -84,6 +90,22 @@ public class ViewPagerDetailsFragment extends DialogFragment {
         @Override
         public int getItemCount() {
             return 3;
+        }
+
+        @Override
+        public void onFetchProgress(Track track) {
+
+        }
+
+        @Override
+        public void onFetchComplete() {
+
+        }
+
+        @Override
+        public void onNewTrack(Track track) {
+            details.onNewTrack(track);
+
         }
     }
 }

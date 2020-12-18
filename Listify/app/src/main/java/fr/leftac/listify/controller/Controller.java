@@ -75,6 +75,11 @@ public class Controller {
         });
     }
 
+    public void changeTrackDetails(Track track) {
+        trackCallbackListener.onNewTrack(track);
+        Log.e("controller", track.getName());
+    }
+
     public void updateArtist(Artist artist) {
         apiManager.getSpotifyApi().getArtist(TokenManager.getToken(), artist.getId()).enqueue(new Callback<Object>() {
             @Override
@@ -216,6 +221,9 @@ public class Controller {
 
     public interface TrackCallbackListener {
         void onFetchProgress(Track track);
+
         void onFetchComplete();
+
+        void onNewTrack(Track track);
     }
 }

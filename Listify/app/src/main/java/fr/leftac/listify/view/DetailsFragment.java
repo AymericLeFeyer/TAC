@@ -27,6 +27,16 @@ public class DetailsFragment extends Fragment {
     private ImageButton favButton;
     private Controller controller;
     private ViewPager2 vp;
+    ImageView image;
+    TextView name;
+    TextView artist;
+    TextView album;
+    TextView duration;
+    TextView popularity;
+
+    public DetailsFragment() {
+        // Required empty public constructor
+    }
 
 
     public DetailsFragment(Track track, Controller controller, ViewPager2 vp) {
@@ -56,19 +66,14 @@ public class DetailsFragment extends Fragment {
 
 //        Init
 
-        ImageView image = view.findViewById(R.id.image);
-        TextView name = view.findViewById(R.id.name);
-        TextView artist = view.findViewById(R.id.artist);
-        TextView album = view.findViewById(R.id.album);
-        TextView duration = view.findViewById(R.id.duration);
-        TextView popularity = view.findViewById(R.id.popularity);
+        image = view.findViewById(R.id.image);
+        name = view.findViewById(R.id.name);
+        artist = view.findViewById(R.id.artist);
+        album = view.findViewById(R.id.album);
+        duration = view.findViewById(R.id.duration);
+        popularity = view.findViewById(R.id.popularity);
         favButton = view.findViewById(R.id.imageButton);
 
-        if (controller.isFavorite(track)) {
-            favButton.setImageResource(R.drawable.ic_baseline_star_24);
-        } else {
-            favButton.setImageResource(R.drawable.ic_baseline_star_border_24);
-        }
 
         favButton.setOnClickListener(v -> {
             Log.e("details", controller.isFavorite(track) + "");
@@ -89,8 +94,15 @@ public class DetailsFragment extends Fragment {
 
 
 //        Set
+        setters();
 
-        Glide.with(requireContext()).load(track.getAlbum().getImage()).fitCenter().into(image);
+
+    }
+
+    public void setters() {
+        if (getContext() != null) {
+            Glide.with(requireContext()).load(track.getAlbum().getImage()).fitCenter().into(image);
+        }
 
         name.setText(track.getName());
         artist.setText(track.getArtist().getName());
@@ -100,6 +112,17 @@ public class DetailsFragment extends Fragment {
         popularity.setText(popularityText);
         popularity.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
+        if (controller.isFavorite(track)) {
+            favButton.setImageResource(R.drawable.ic_baseline_star_24);
+        } else {
+            favButton.setImageResource(R.drawable.ic_baseline_star_border_24);
+        }
+    }
+
+
+    public void onNewTrack(Track track) {
+        this.track = track;
+        setters();
 
     }
 }

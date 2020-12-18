@@ -1,6 +1,7 @@
 package fr.leftac.listify.view;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,10 +74,13 @@ public class DetailsFragment extends Fragment {
         }
 
         favButton.setOnClickListener(v -> {
+            Log.e("details", controller.isFavorite(track) + "");
             if (controller.isFavorite(track)) {
+                track.setFavorite(false);
                 controller.removeTrackFromBDD(track);
                 favButton.setImageResource(R.drawable.ic_baseline_star_border_24);
             } else {
+                track.setFavorite(true);
                 controller.saveTrackToBDD(track);
                 favButton.setImageResource(R.drawable.ic_baseline_star_24);
             }

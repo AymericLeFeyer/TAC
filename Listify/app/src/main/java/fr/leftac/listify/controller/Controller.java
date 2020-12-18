@@ -53,7 +53,7 @@ public class Controller {
 
                         Track t = Track.jsonToTrack(res.get(i));
                         updateArtist(t.getArtist());
-//                        updateAlbum(t.getAlbum());
+                        updateAlbum(t.getAlbum());
 
                         trackCallbackListener.onFetchProgress(t);
                     }
@@ -140,8 +140,8 @@ public class Controller {
                         Track newTrack = new Track();
                         newTrack.setId(track.getAsJsonPrimitive("id").getAsString());
                         newTrack.setName(track.getAsJsonPrimitive("name").getAsString());
-//                        newTrack.setArtist(album.getArtist());
-//                        newTrack.setAlbum(album);
+                        newTrack.setArtist(album.getArtist());
+                        newTrack.setAlbum(album);
                         g.add(newTrack);
                     }
                     album.setTracks(g);
@@ -163,11 +163,12 @@ public class Controller {
 
     public void saveTrackToBDD(Track track) {
         Realm realm = Realm.getDefaultInstance();
+
         try {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    Track alreadyIn = realm.where(Track.class).equalTo("id", track.getId()).findFirst();
+                    Track alreadyIn = realm.where(Track.class).equalTo("id", track.getId()).equalTo("favorite", true).findFirst();
                     if (alreadyIn == null) {
                         track.setFavDate(new Date());
                         realm.copyToRealm(track);
@@ -186,7 +187,7 @@ public class Controller {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    Track result = realm.where(Track.class).equalTo("id", track.getId()).findFirst();
+                    Track result = realm.where(Track.class).equalTo("id", track.getId()).equalTo("favorite", true).findFirst();
                     if(result != null){
                         track.setFavorite(false);
                         track.setFavDate(null);
@@ -207,7 +208,7 @@ public class Controller {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    RealmResults<Track> results = realm.where(Track.class).findAll();
+                    RealmResults<Track> results = realm.where(Track.class).equalTo("favorite", true).findAll();
                     savedTracks.addAll(realm.copyFromRealm(results));
                 }
             });
@@ -224,7 +225,7 @@ public class Controller {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    Track result = realm.where(Track.class).equalTo("id", t.getId()).findFirst();
+                    Track result = realm.where(Track.class).equalTo("id", t.getId()).equalTo("favorite", true).findFirst();
                     if(result != null) isFav = true;
                 }
             });

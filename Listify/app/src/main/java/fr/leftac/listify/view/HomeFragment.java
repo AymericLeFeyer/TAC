@@ -3,13 +3,16 @@ package fr.leftac.listify.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -18,6 +21,9 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
+import fr.leftac.listify.MainActivity;
 import fr.leftac.listify.R;
 import fr.leftac.listify.controller.Controller;
 import fr.leftac.listify.model.pojo.Track;
@@ -57,8 +63,62 @@ public class HomeFragment extends Fragment implements Controller.TrackCallbackLi
         if (getActivity() != null) {
             Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
             toolbar.setOnMenuItemClickListener(item -> {
-                switchLayout();
-                switchIcon(item);
+                boolean updateSearchFragment = false, updateFavFragment = false;
+                int sortMethod = 0;
+                switch(item.getItemId()){
+                    case R.id.action_modeview:
+                        switchLayout();
+                        switchIcon(item);
+                        break;
+                    case R.id.action_search_sort1:
+                        updateSearchFragment = true;
+                        sortMethod = 1;
+                        break;
+                    case R.id.action_search_sort2:
+                        updateSearchFragment = true;
+                        sortMethod = 2;
+                        break;
+                    case R.id.action_search_sort3:
+                        updateSearchFragment = true;
+                        sortMethod = 3;
+                        break;
+                    case R.id.action_search_sort4:
+                        updateSearchFragment = true;
+                        sortMethod = 4;
+                        break;
+
+                    case R.id.action_fav_sort1:
+                        updateFavFragment = true;
+                        sortMethod = 1;
+                        break;
+                    case R.id.action_fav_sort2:
+                        updateFavFragment = true;
+                        sortMethod = 2;
+                        break;
+                    case R.id.action_fav_sort3:
+                        updateFavFragment = true;
+                        sortMethod = 3;
+                        break;
+                }
+
+                if(searchFragment != null && updateSearchFragment && sortMethod != 0){
+                    if(searchFragment.getTracks() != null && !searchFragment.getTracks().isEmpty()){
+                        Log.e("sort", "Tri searchFragment");
+                        searchFragment.sort(sortMethod);
+                        searchFragment.updateListAdapter();
+                        Toast.makeText(getActivity(), "Tri par " + item.getTitle().toString().toLowerCase() + " réalisé", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                if(favoritesFragment != null && updateFavFragment && sortMethod != 0){
+                    if(favoritesFragment.getTracks() != null && !favoritesFragment.getTracks().isEmpty()) {
+                        Log.e("sort", "Tri favFragment");
+                        favoritesFragment.sort(sortMethod);
+                        favoritesFragment.updateListAdapter();
+                        Toast.makeText(getActivity(), "Tri par " + item.getTitle().toString().toLowerCase() + " réalisé", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
                 return false;
             });
         }
@@ -70,6 +130,9 @@ public class HomeFragment extends Fragment implements Controller.TrackCallbackLi
 
     @Override
     public void onFetchProgress(Track track) {
+        if(controller.isFavorite(track)){
+            track.setFavorite(true);
+        }
         searchFragment.getTracks().add(track);
     }
 
@@ -77,6 +140,7 @@ public class HomeFragment extends Fragment implements Controller.TrackCallbackLi
     public void onFetchComplete() {
         searchFragment.updateListAdapter();
         if (favoritesFragment != null) {
+            favoritesFragment.getSavedTracks();
             favoritesFragment.updateListAdapter();
         }
     }

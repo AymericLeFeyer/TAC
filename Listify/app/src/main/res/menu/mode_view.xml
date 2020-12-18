@@ -7,6 +7,52 @@
         android:title="Changer le mode"
         app:showAsAction="ifRoom"/>
 
-    <!-- Settings, should always be in the overflow -->
+    <item
+        android:id="@+id/action_sort"
+        android:icon="@drawable/ic_baseline_filter_list_24"
+        android:title="Trier"
+        app:showAsAction="always">
+        <menu
+            android:id="@+id/sort_menu">
 
+            <!-- Pour le searchFragment -->
+            <item
+                android:id="@+id/action_search_sort1"
+                android:icon="@drawable/filter_1"
+                android:title="Ordre alphabétique du titre"
+                app:showAsAction="ifRoom"/>
+            <item
+                android:id="@+id/action_search_sort2"
+                android:icon="@drawable/filter_2"
+                android:title="Ordre alphabétique d'artiste"
+                app:showAsAction="ifRoom" />
+            <item
+                android:id="@+id/action_search_sort3"
+                android:icon="@drawable/filter_3"
+                android:title="Ordre de popularité"
+                app:showAsAction="ifRoom" />
+            <item
+                android:id="@+id/action_search_sort4"
+                android:icon="@drawable/filter_4"
+                android:title="Favoris"
+                app:showAsAction="ifRoom" />
+
+            <!-- Pour le favoritesFragment -->
+            <item
+                android:id="@+id/action_fav_sort1"
+                android:icon="@drawable/filter_1"
+                android:title="Ordre alphabétique du titre"
+                app:showAsAction="ifRoom" />
+            <item
+                android:id="@+id/action_fav_sort2"
+                android:icon="@drawable/filter_2"
+                android:title="Ordre alphabétique d'artiste"
+                app:showAsAction="ifRoom" />
+            <item
+                android:id="@+id/action_fav_sort3"
+                android:icon="@drawable/filter_3"
+                android:title="Date d'ajout"
+                app:showAsAction="ifRoom" />
+        </menu>
+    </item>
 </menu>

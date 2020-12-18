@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import fr.leftac.listify.R;
@@ -36,6 +39,7 @@ public class SearchFragment extends Fragment {
     private EditText searchField;
     private GridLayoutManager gridLayoutManager;
     private ProgressBar progressBar;
+    private boolean ordreTri1 = false, ordreTri2 = false, ordreTri3 = false, ordreTri4 = false;
 
     public SearchFragment(Controller controller) {
         super();
@@ -56,6 +60,7 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
+        setHasOptionsMenu(true);
 
         // Views
         searchButton = view.findViewById(R.id.searchButton);
@@ -64,7 +69,6 @@ public class SearchFragment extends Fragment {
 
         // Init variables
         if (tracks == null) tracks = new ArrayList<>();
-
 
         // Recycler View
         gridLayoutManager = new GridLayoutManager(getContext(), 1);
@@ -136,4 +140,76 @@ public class SearchFragment extends Fragment {
         return gridLayoutManager;
     }
 
+    public void sort(int i) {
+        if(tracks != null) switch(i){
+            case 1:
+                Collections.sort(tracks, new Comparator() {
+                    @Override
+                    public int compare(Object t1, Object t2) {
+                        int cmp = ((Track)t1).getName().compareTo(((Track)t2).getName());
+                        if(!ordreTri1) return cmp;
+                        else return -cmp;
+                    }
+                });
+
+                if(!ordreTri1) {
+                    ordreTri1 = true;
+                } else ordreTri1 = false;
+
+                break;
+            case 2:
+                Collections.sort(tracks, new Comparator() {
+                    @Override
+                    public int compare(Object t1, Object t2) {
+                        int cmp = ((Track) t1).getArtist().getName().compareTo(((Track) t2).getArtist().getName());
+                        if (!ordreTri2) return -cmp;
+                        else return cmp;
+                    }
+                });
+
+                if(!ordreTri2) {
+                    ordreTri2 = true;
+                } else ordreTri2 = false;
+
+                break;
+            case 3:
+                Collections.sort(tracks, new Comparator() {
+                    @Override
+                    public int compare(Object t1, Object t2) {
+                        int cmp = Integer.compare(((Track)t1).getPopularity(),((Track)t2).getPopularity());
+                        if(!ordreTri3) return -cmp;
+                        else return cmp;
+                    }
+                });
+
+                if(!ordreTri3) {
+                    ordreTri3 = true;
+                } else ordreTri3 = false;
+
+                break;
+            case 4:
+                Collections.sort(tracks, new Comparator() {
+                    @Override
+                    public int compare(Object t1, Object t2) {
+                        int cmp = Boolean.compare(((Track)t1).isFavorite(), ((Track)t2).isFavorite());
+                        if(!ordreTri4) return -cmp;
+                        else return cmp;
+                    }
+                });
+
+                if(!ordreTri4) {
+                    ordreTri4 = true;
+                } else ordreTri4 = false;
+
+                break;
+            default:
+                Log.e("sortError", "SearchFragment méthode "+i+" non prise en compte");
+                break;
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 }

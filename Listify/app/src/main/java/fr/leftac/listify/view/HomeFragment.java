@@ -99,11 +99,13 @@ public class HomeFragment extends Fragment implements Controller.TrackCallbackLi
                         updateFavFragment = true;
                         sortMethod = 3;
                         break;
+
+                    default:
+                        break;
                 }
 
                 if(searchFragment != null && updateSearchFragment && sortMethod != 0){
                     if(searchFragment.getTracks() != null && !searchFragment.getTracks().isEmpty()){
-                        Log.e("sort", "Tri searchFragment");
                         searchFragment.sort(sortMethod);
                         searchFragment.updateListAdapter();
                         Toast.makeText(getActivity(), "Tri par " + item.getTitle().toString().toLowerCase() + " réalisé", Toast.LENGTH_SHORT).show();
@@ -112,7 +114,6 @@ public class HomeFragment extends Fragment implements Controller.TrackCallbackLi
 
                 if(favoritesFragment != null && updateFavFragment && sortMethod != 0){
                     if(favoritesFragment.getTracks() != null && !favoritesFragment.getTracks().isEmpty()) {
-                        Log.e("sort", "Tri favFragment");
                         favoritesFragment.sort(sortMethod);
                         favoritesFragment.updateListAdapter();
                         Toast.makeText(getActivity(), "Tri par " + item.getTitle().toString().toLowerCase() + " réalisé", Toast.LENGTH_SHORT).show();

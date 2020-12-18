@@ -1,7 +1,6 @@
 package fr.leftac.listify.view;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +58,8 @@ public class FavoritesFragment extends Fragment {
         listAdapter = new TrackAdapter(tracks, gridLayoutManager, controller, getFragmentManager());
         list.setAdapter(listAdapter);
 
+        getSavedTracks();
+
         return view;
     }
 
@@ -105,8 +106,8 @@ public class FavoritesFragment extends Fragment {
                     @Override
                     public int compare(Object t1, Object t2) {
                         int cmp = ((Track)t1).getArtist().getName().compareTo(((Track)t2).getArtist().getName());
-                        if (!ordreTri2) return -cmp;
-                        else return cmp;
+                        if (!ordreTri2) return cmp;
+                        else return -cmp;
                     }
                 });
 
@@ -120,8 +121,8 @@ public class FavoritesFragment extends Fragment {
                     @Override
                     public int compare(Object t1, Object t2) {
                         int cmp = ((Track)t1).getFavDate().compareTo(((Track)t2).getFavDate());
-                        if(!ordreTri3) return cmp;
-                        else return -cmp;
+                        if(!ordreTri3) return -cmp;
+                        else return cmp;
                     }
                 });
 
@@ -131,7 +132,6 @@ public class FavoritesFragment extends Fragment {
 
                 break;
             default:
-                Log.e("sortError", "FavoritesFragment méthode "+i+" non prise en compte");
                 break;
         }
     }

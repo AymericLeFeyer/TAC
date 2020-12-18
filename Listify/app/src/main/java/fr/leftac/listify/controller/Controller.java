@@ -102,6 +102,7 @@ public class Controller {
 
                     // Update genres
                     JsonArray genres = responseBody.getAsJsonArray("genres");
+                    //TODO : Remplacer RealmList par List
                     RealmList<String> g = new RealmList<>();
                     for (JsonElement genre : genres) {
                         g.add(genre.getAsString());
@@ -135,6 +136,7 @@ public class Controller {
                     JsonObject tracks = responseBody.getAsJsonObject("tracks");
                     JsonArray items = tracks.getAsJsonArray("items");
 
+                    //TODO : Remplacer RealmList par List
                     RealmList<Track> g = new RealmList<>();
                     for (JsonElement t : items) {
                         JsonObject track = t.getAsJsonObject();

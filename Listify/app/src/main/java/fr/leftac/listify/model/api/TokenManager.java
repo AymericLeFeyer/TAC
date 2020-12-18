@@ -9,6 +9,8 @@ import com.google.gson.JsonParser;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Date;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,8 +23,11 @@ public class TokenManager {
     static final String BASE_URL = "https://accounts.spotify.com/api/";
     private static final String TAG = TokenManager.class.getSimpleName();
     static String token;
+    static Date generatedAt;
 
     public static void generateToken() {
+
+        Log.e("token manager", "generation ...");
 
         // Our service
         SpotifyApi api = new Retrofit.Builder()
@@ -48,6 +53,7 @@ public class TokenManager {
                 // Update the token value
 
                 TokenManager.token = "Bearer " + token.toString().replaceAll("\"", "");
+                TokenManager.generatedAt = new Date();
             }
 
             @Override
@@ -64,7 +70,11 @@ public class TokenManager {
     }
 
     public static boolean isTokenValid() {
-        return !(token == null);
+        if (generatedAt == null) return false;
+
+        boolean expired = ((new Date().getTime() - generatedAt.getTime()) / (1000 * 60)) >= 1;
+
+        return (token != null && !expired);
     }
 
 }

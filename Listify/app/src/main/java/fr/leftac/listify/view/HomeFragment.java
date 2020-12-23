@@ -2,6 +2,7 @@ package fr.leftac.listify.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -21,11 +23,13 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Date;
 import java.util.List;
 
 import fr.leftac.listify.MainActivity;
 import fr.leftac.listify.R;
 import fr.leftac.listify.controller.Controller;
+import fr.leftac.listify.model.DrawableViewModel;
 import fr.leftac.listify.model.pojo.Track;
 
 public class HomeFragment extends Fragment implements Controller.TrackCallbackListener {
@@ -148,7 +152,7 @@ public class HomeFragment extends Fragment implements Controller.TrackCallbackLi
 
     @Override
     public void onNewTrack(Track track) {
-        Log.e("home fragment", track.getName());
+        //Log.e("home fragment", track.getName());
 
     }
 
@@ -157,9 +161,15 @@ public class HomeFragment extends Fragment implements Controller.TrackCallbackLi
         Context context = getContext();
         if (searchFragment != null && context != null) {
             if (searchFragment.getGridLayoutManager().getSpanCount() == 3) {
-                item.setIcon(context.getDrawable(R.drawable.ic_list));
+                Drawable d = context.getDrawable(R.drawable.ic_list);
+                item.setIcon(d);
+                DrawableViewModel viewModel = new ViewModelProvider(requireActivity()).get(DrawableViewModel.class);
+                viewModel.setDrawableToShow(d);
             } else {
-                item.setIcon(context.getDrawable(R.drawable.ic_grid));
+                Drawable d = context.getDrawable(R.drawable.ic_grid);
+                item.setIcon(d);
+                DrawableViewModel viewModel = new ViewModelProvider(requireActivity()).get(DrawableViewModel.class);
+                viewModel.setDrawableToShow(d);
             }
         }
     }

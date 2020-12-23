@@ -205,9 +205,4 @@ public class SearchFragment extends Fragment {
                 break;
         }
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 }

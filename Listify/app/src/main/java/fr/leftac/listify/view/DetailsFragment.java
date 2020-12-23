@@ -105,7 +105,7 @@ public class DetailsFragment extends Fragment {
         }
 
         favButton.setOnClickListener(v -> {
-            Log.e("details", track.getName() + "");
+            //Log.e("details", track.getName() + "");
             if (controller.isFavorite(track)) {
                 track.setFavorite(false);
                 controller.removeTrackFromBDD(track);

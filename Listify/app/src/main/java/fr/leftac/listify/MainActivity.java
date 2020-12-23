@@ -1,13 +1,16 @@
 package fr.leftac.listify;
 
+import android.annotation.SuppressLint;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -18,6 +21,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.Objects;
 
 import fr.leftac.listify.controller.ConnectivityStatusReceiver;
+import fr.leftac.listify.model.DrawableViewModel;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -29,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     Toolbar toolbar;
     ConnectivityStatusReceiver connectivityStatusReceiver;
+    DrawableViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +64,20 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
+        viewModel = new ViewModelProvider(this).get(DrawableViewModel.class);
+
         connectivityStatusReceiver = new ConnectivityStatusReceiver();
     }
 
+    @SuppressLint("ResourceType")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.mode_view, menu);
+        viewModel.getSelectedItem().observe(this, item -> {
+            menu.getItem(0).setIcon(item);
+        });
+
         return super.onCreateOptionsMenu(menu);
     }
 

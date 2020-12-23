@@ -135,9 +135,4 @@ public class FavoritesFragment extends Fragment {
                 break;
         }
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 }

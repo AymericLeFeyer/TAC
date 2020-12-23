@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import fr.leftac.listify.model.api.ApiManager;
 import fr.leftac.listify.model.api.TokenManager;
@@ -77,7 +78,6 @@ public class Controller {
 
     public void changeTrackDetails(Track track) {
         trackCallbackListener.onNewTrack(track);
-        Log.e("controller", track.getName());
     }
 
     public void updateArtist(Artist artist) {
@@ -150,6 +150,9 @@ public class Controller {
                         newTrack.setName(track.getAsJsonPrimitive("name").getAsString());
                         newTrack.setArtist(album.getArtist());
                         newTrack.setAlbum(album);
+                        // Get duration and popularity
+                        updateTrack(newTrack);
+
                         g.add(newTrack);
                     }
                     album.setTracks(g);
@@ -168,8 +171,39 @@ public class Controller {
         });
     }
 
+    public void updateTrack(Track track) {
+        apiManager.getSpotifyApi().getTrack(TokenManager.getToken(), track.getId()).enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(@NotNull Call<Object> call, @NotNull Response<Object> response) {
+                if (response.body() != null) {
+                    // Parse the response
+                    JsonObject responseBody = parser.parse(new Gson().toJson(response.body())).getAsJsonObject();
+
+                    // Update tracks
+                    JsonPrimitive duration = responseBody.getAsJsonPrimitive("duration_ms");
+                    JsonPrimitive popularity = responseBody.getAsJsonPrimitive("popularity");
+
+                    track.setDuration(duration.getAsInt());
+                    track.setPopularity(popularity.getAsInt());
+
+
+                } else {
+                    Log.e("searchError", "response.body is null");
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<Object> call, @NotNull Throwable t) {
+
+            }
+        });
+
+    }
+
 
     public void saveTrackToBDD(Track track) {
+        //Log.e("controller", track.getName());
 
         try (Realm realm = Realm.getDefaultInstance()) {
             realm.executeTransaction(realm1 -> {
@@ -186,11 +220,14 @@ public class Controller {
     public void removeTrackFromBDD(Track track) {
         try (Realm realm = Realm.getDefaultInstance()) {
             realm.executeTransaction(realm1 -> {
-                Track result = realm1.where(Track.class).equalTo("id", track.getId()).equalTo("favorite", true).findFirst();
+                List<Track> result = realm1.where(Track.class).equalTo("id", track.getId()).equalTo("favorite", true).findAll();
                 if (result != null) {
                     track.setFavorite(false);
                     track.setFavDate(null);
-                    result.deleteFromRealm();
+                    for (Track t : result) {
+                        t.deleteFromRealm();
+                    }
+
                 }
             });
         }
@@ -202,10 +239,29 @@ public class Controller {
         try (Realm realm = Realm.getDefaultInstance()) {
             realm.executeTransaction(realm1 -> {
                 RealmResults<Track> results = realm1.where(Track.class).equalTo("favorite", true).findAll();
-                savedTracks.addAll(realm1.copyFromRealm(results));
+
+
+                for (Track t : results) {
+                    if (!isAlreadyIn(t, savedTracks)) {
+
+                        savedTracks.add(realm1.copyFromRealm(t));
+
+                    }
+                }
+
             });
         }
         return savedTracks;
+    }
+
+    public boolean isAlreadyIn(Track t, List<Track> list) {
+        for (Track track : list) {
+            if (track.getId().equals(t.getId())) {
+                return true;
+            }
+        }
+        return false;
+
     }
 
     public boolean isFavorite(Track t) {

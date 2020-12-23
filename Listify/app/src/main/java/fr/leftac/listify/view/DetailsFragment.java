@@ -74,20 +74,6 @@ public class DetailsFragment extends Fragment {
         popularity = view.findViewById(R.id.popularity);
         favButton = view.findViewById(R.id.imageButton);
 
-
-        favButton.setOnClickListener(v -> {
-            Log.e("details", controller.isFavorite(track) + "");
-            if (controller.isFavorite(track)) {
-                track.setFavorite(false);
-                controller.removeTrackFromBDD(track);
-                favButton.setImageResource(R.drawable.ic_baseline_star_border_24);
-            } else {
-                track.setFavorite(true);
-                controller.saveTrackToBDD(track);
-                favButton.setImageResource(R.drawable.ic_baseline_star_24);
-            }
-        });
-
         artist.setOnClickListener(v -> vp.setCurrentItem(1, true));
 
         album.setOnClickListener(v -> vp.setCurrentItem(2, true));
@@ -117,6 +103,19 @@ public class DetailsFragment extends Fragment {
         } else {
             favButton.setImageResource(R.drawable.ic_baseline_star_border_24);
         }
+
+        favButton.setOnClickListener(v -> {
+            Log.e("details", track.getName() + "");
+            if (controller.isFavorite(track)) {
+                track.setFavorite(false);
+                controller.removeTrackFromBDD(track);
+                favButton.setImageResource(R.drawable.ic_baseline_star_border_24);
+            } else {
+                track.setFavorite(true);
+                controller.saveTrackToBDD(track);
+                favButton.setImageResource(R.drawable.ic_baseline_star_24);
+            }
+        });
     }
 
 

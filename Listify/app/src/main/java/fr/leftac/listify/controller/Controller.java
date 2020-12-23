@@ -150,6 +150,9 @@ public class Controller {
                         newTrack.setName(track.getAsJsonPrimitive("name").getAsString());
                         newTrack.setArtist(album.getArtist());
                         newTrack.setAlbum(album);
+                        // Get duration and popularity
+                        updateTrack(newTrack);
+
                         g.add(newTrack);
                     }
                     album.setTracks(g);
@@ -177,8 +180,11 @@ public class Controller {
                     JsonObject responseBody = parser.parse(new Gson().toJson(response.body())).getAsJsonObject();
 
                     // Update tracks
-                    JsonObject tracks = responseBody.getAsJsonObject("tracks");
-                    JsonArray items = tracks.getAsJsonArray("items");
+                    JsonPrimitive duration = responseBody.getAsJsonPrimitive("duration_ms");
+                    JsonPrimitive popularity = responseBody.getAsJsonPrimitive("popularity");
+
+                    track.setDuration(duration.getAsInt());
+                    track.setPopularity(popularity.getAsInt());
 
 
                 } else {
@@ -214,11 +220,14 @@ public class Controller {
     public void removeTrackFromBDD(Track track) {
         try (Realm realm = Realm.getDefaultInstance()) {
             realm.executeTransaction(realm1 -> {
-                Track result = realm1.where(Track.class).equalTo("id", track.getId()).equalTo("favorite", true).findFirst();
+                List<Track> result = realm1.where(Track.class).equalTo("id", track.getId()).equalTo("favorite", true).findAll();
                 if (result != null) {
                     track.setFavorite(false);
                     track.setFavDate(null);
-                    result.deleteFromRealm();
+                    for (Track t : result) {
+                        t.deleteFromRealm();
+                    }
+
                 }
             });
         }

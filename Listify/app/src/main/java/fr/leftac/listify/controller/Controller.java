@@ -203,7 +203,7 @@ public class Controller {
 
 
     public void saveTrackToBDD(Track track) {
-        Log.e("controller", track.getName());
+        //Log.e("controller", track.getName());
 
         try (Realm realm = Realm.getDefaultInstance()) {
             realm.executeTransaction(realm1 -> {

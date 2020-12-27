@@ -1,5 +1,7 @@
 package fr.leftac.listify.view;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -73,6 +75,17 @@ public class DetailsFragment extends Fragment {
         duration = view.findViewById(R.id.duration);
         popularity = view.findViewById(R.id.popularity);
         favButton = view.findViewById(R.id.imageButton);
+        
+        view.findViewById(R.id.redirectLayout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://open.spotify.com/track/" + track.getId();
+
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
 
         artist.setOnClickListener(v -> vp.setCurrentItem(1, true));
 

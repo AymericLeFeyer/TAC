@@ -20,6 +20,9 @@
     <!-- Toasts -->
     <string name="empty_searchfield">Veuillez compléter le champ</string>
     <string name="no_connection">Vous n\'êtes pas connecté à internet.</string>
+    <string name="listen_spotify">Écouter dans Spotify</string>
+    <string name="logo_titre">Logo titre</string>
+    <string name="logo_spotify">Logo Spotify</string>
 
 
 </resources>

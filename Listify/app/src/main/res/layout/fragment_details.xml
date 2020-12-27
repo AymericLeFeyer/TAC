@@ -25,6 +25,7 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginTop="24dp"
+        android:contentDescription="@string/albumImage"
         android:src="@drawable/ic_baseline_music_video_24"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -75,6 +76,7 @@
         android:layout_marginEnd="32dp"
         android:adjustViewBounds="false"
         android:background="@null"
+        android:contentDescription="@string/favButton"
         android:cropToPadding="false"
         android:scaleType="fitStart"
         android:src="@drawable/ic_baseline_star_border_24"
@@ -128,6 +130,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -143,7 +146,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="TextView"
+            android:text="@string/textview"
             android:textAlignment="center" />
 
         <TextView
@@ -152,8 +155,40 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="TextView"
+            android:text="@string/textview"
             android:textAlignment="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/redirectLayout"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+        <ImageView
+            android:id="@+id/spotifyIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="16dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/logo_spotify"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_spotify_logo" />
+
+        <Button
+            android:id="@+id/spotify_redirect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text="@string/listen_spotify" />
     </LinearLayout>
 
     <ImageView
@@ -161,6 +196,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
+        android:contentDescription="@string/logo_titre"
         android:src="@drawable/ic_baseline_music_note_24"
         app:layout_constraintBottom_toBottomOf="@+id/textView2"
         app:layout_constraintStart_toStartOf="parent"

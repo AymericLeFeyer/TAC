@@ -1,6 +1,28 @@
 <resources>
     <string name="app_name">Listify</string>
+
+    <!-- Raw texts -->
+    <string name="duration">Durée</string>
+    <string name="popularity">Popularité</string>
+    <string name="search_button">Rechercher</string>
+    <string name="followers">Followers</string>
+    <string name="genres">Genres</string>
+    <string name="details_track">Détails du titre</string>
+    <string name="details_artist">Détails de l\'artiste</string>
+    <string name="details_album">Détails de l\'album</string>
+    <string name="albumImage">Image de l\'album</string>
+
+    <!-- Accessibility -->
+    <string name="logo">Logo Listify</string>
+    <string name="textview">TextView</string>
+    <string name="favButton">Bouton favoris</string>
+
+    <!-- Toasts -->
     <string name="empty_searchfield">Veuillez compléter le champ</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_connection">Vous n\'êtes pas connecté à internet.</string>
+    <string name="listen_spotify">Écouter dans Spotify</string>
+    <string name="logo_titre">Logo titre</string>
+    <string name="logo_spotify">Logo Spotify</string>
+
+
 </resources>

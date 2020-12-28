@@ -1,39 +1,38 @@
 package fr.leftac.listify.view;
 
-import android.content.Context;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import fr.leftac.listify.R;
 import fr.leftac.listify.controller.Controller;
 import fr.leftac.listify.model.adapter.TrackAdapter;
 import fr.leftac.listify.model.pojo.Track;
 
-public class FavoritesFragment extends Fragment implements Controller.TrackCallbackListener {
+public class FavoritesFragment extends Fragment {
 
     private Controller controller;
-    private RecyclerView list;
     public TrackAdapter listAdapter;
+    private List<Track> tracks;
     private GridLayoutManager gridLayoutManager;
-    private ArrayList tracks;
-    private Toolbar toolbar;
+    private int spanCount;
+    private boolean ordreTri1 = false, ordreTri2 = false, ordreTri3 = false;
 
-    public FavoritesFragment() {}
+    public FavoritesFragment(Controller controller, int spanCount) {
+        super();
+        this.controller = controller;
+        this.spanCount = spanCount;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,76 +41,98 @@ public class FavoritesFragment extends Fragment implements Controller.TrackCallb
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        controller = new Controller(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_favorites, container, false);
-        toolbar = getActivity().findViewById(R.id.toolbar);
+        setHasOptionsMenu(true);
 
         // Recycler View
-        list = view.findViewById(R.id.favoritesList);
+        gridLayoutManager = new GridLayoutManager(getContext(), spanCount);
+        RecyclerView list = view.findViewById(R.id.favoritesList);
         list.setHasFixedSize(true);
-        Context context;
-        gridLayoutManager = new GridLayoutManager(getContext(), 1);
+
         list.setLayoutManager(gridLayoutManager);
 
-        tracks = controller.getSavedTracks();
-        listAdapter = new TrackAdapter(tracks, gridLayoutManager);
+        ArrayList<fr.leftac.listify.model.pojo.Track> tracks = controller.getSavedTracks();
+        listAdapter = new TrackAdapter(tracks, gridLayoutManager, controller, getFragmentManager());
         list.setAdapter(listAdapter);
 
-        // Toolbar
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switchLayout();
-                switchIcon(item);
-                return false;
-            }
-        });
-
-
+        getSavedTracks();
 
         return view;
     }
 
-    //TODO: Mettre ces methodes qui sont communes avec SearchFragment dans un fichier à part
-    private void switchLayout() {
-        if (gridLayoutManager.getSpanCount() == 1) {
-            gridLayoutManager.setSpanCount(3);
-        } else {
-            gridLayoutManager.setSpanCount(1);
-        }
-        listAdapter.notifyItemRangeChanged(0, listAdapter.getItemCount());
-    }
-
-    private void switchIcon(MenuItem item) {
-        if (gridLayoutManager.getSpanCount() == 3) {
-            item.setIcon(getResources().getDrawable(R.drawable.ic_list));
-        } else {
-            item.setIcon(getResources().getDrawable(R.drawable.ic_grid));
-        }
-    }
-
-    //TODO: Trouver une façon plus opti d'update le listAdapter car actuellement ça crée un petit freeze
-    @Override
-    public void onResume() {
+    public void getSavedTracks(){
         tracks = controller.getSavedTracks();
+    }
+
+    public void updateListAdapter(){
         listAdapter.updateItems(tracks);
         listAdapter.notifyDataSetChanged();
-        super.onResume();
     }
 
-    @Override
-    public void onFetchProgress(Track track) {
+    public List<Track> getTracks() {
+        return tracks;
     }
 
-    @Override
-    public void onFetchComplete() {
+    public TrackAdapter getListAdapter() {
+        return listAdapter;
+    }
+
+    public GridLayoutManager getGridLayoutManager() {
+        return gridLayoutManager;
+    }
+
+    public void sort(int i) {
+        if(tracks != null) switch(i){
+            case 1:
+                Collections.sort(tracks, new Comparator() {
+                    @Override
+                    public int compare(Object t1, Object t2) {
+                        int cmp = ((Track)t1).getName().compareTo(((Track)t2).getName());
+                        if(!ordreTri1) return cmp;
+                        else return -cmp;
+                    }
+                });
+
+                if(!ordreTri1) {
+                    ordreTri1 = true;
+                } else ordreTri1 = false;
+
+                break;
+            case 2:
+                Collections.sort(tracks, new Comparator() {
+                    @Override
+                    public int compare(Object t1, Object t2) {
+                        int cmp = ((Track)t1).getArtist().getName().compareTo(((Track)t2).getArtist().getName());
+                        if (!ordreTri2) return cmp;
+                        else return -cmp;
+                    }
+                });
+
+                if(!ordreTri2) {
+                    ordreTri2 = true;
+                } else ordreTri2 = false;
+
+                break;
+            case 3:
+                Collections.sort(tracks, new Comparator() {
+                    @Override
+                    public int compare(Object t1, Object t2) {
+                        int cmp = ((Track)t1).getFavDate().compareTo(((Track)t2).getFavDate());
+                        if(!ordreTri3) return -cmp;
+                        else return cmp;
+                    }
+                });
+
+                if(!ordreTri3) {
+                    ordreTri3 = true;
+                } else ordreTri3 = false;
+
+                break;
+            default:
+                break;
+        }
     }
 }

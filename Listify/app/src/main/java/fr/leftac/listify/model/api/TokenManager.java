@@ -7,6 +7,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Date;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -19,8 +23,11 @@ public class TokenManager {
     static final String BASE_URL = "https://accounts.spotify.com/api/";
     private static final String TAG = TokenManager.class.getSimpleName();
     static String token;
+    static Date generatedAt;
 
     public static void generateToken() {
+
+        Log.e("token manager", "generation ...");
 
         // Our service
         SpotifyApi api = new Retrofit.Builder()
@@ -35,7 +42,7 @@ public class TokenManager {
 
         api.token("client_credentials", basicAuth).enqueue(new Callback() {
             @Override
-            public void onResponse(Call call, Response response) {
+            public void onResponse(@NotNull Call call, @NotNull Response response) {
                 // Initialize a parser
                 JsonParser parser = new JsonParser();
                 // Parse the response
@@ -45,17 +52,14 @@ public class TokenManager {
 
                 // Update the token value
 
-                TokenManager.token = token.toString().replaceAll("\"", "");
-
-                Log.i(TAG, "le token a été généré : " + TokenManager.getToken());
-
+                TokenManager.token = "Bearer " + token.toString().replaceAll("\"", "");
+                TokenManager.generatedAt = new Date();
             }
 
             @Override
-            public void onFailure(Call call, Throwable t) {
+            public void onFailure(@NotNull Call call, @NotNull Throwable t) {
                 t.printStackTrace();
                 Log.e(TAG, "une erreur est survenue");
-
             }
         });
 
@@ -63,6 +67,14 @@ public class TokenManager {
 
     public static String getToken() {
         return token;
+    }
+
+    public static boolean isTokenValid() {
+        if (generatedAt == null) return false;
+
+        boolean expired = ((new Date().getTime() - generatedAt.getTime()) / (1000 * 60)) >= 60;
+
+        return (token != null && !expired);
     }
 
 }

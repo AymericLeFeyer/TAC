@@ -1,14 +1,15 @@
 package fr.leftac.listify.model.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,49 +20,36 @@ import java.util.List;
 import fr.leftac.listify.R;
 import fr.leftac.listify.controller.Controller;
 import fr.leftac.listify.model.pojo.Track;
+import fr.leftac.listify.view.ViewPagerDetailsFragment;
 
 public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder> {
     private List<Track> listTracks;
     private GridLayoutManager layoutManager;
+    private Controller controller;
+    private FragmentManager fm;
 
-    private static final int SEARCH_VIEW_TYPE = 0;
-    private static final int FAVORITES_VIEW_TYPE = 1;
     private static final int VIEW_TYPE_ROW = 1;
     private static final int VIEW_TYPE_COLUMN = 2;
 
-    public TrackAdapter(List<Track> listTracks, GridLayoutManager layoutManager) {
+    public TrackAdapter(List<Track> listTracks, GridLayoutManager layoutManager, Controller controller, FragmentManager fragmentManager) {
         this.listTracks = listTracks;
         this.layoutManager = layoutManager;
+        this.controller = controller;
+        this.fm = fragmentManager;
     }
 
     @NonNull
     @Override
     public TrackAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = null;
-        //TODO: Faire fonctionner le type de vue pour pouvoir gérer un layout différent
-//        switch (viewType) {
-//            case SEARCH_VIEW_TYPE:
-//                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.track_item, parent, false);
-//                break;
-//
-//            case FAVORITES_VIEW_TYPE:
-//                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.track_item_favorite, parent, false);
-//                break;
-//
-//            default:
-//                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.track_item, parent, false);
-//                break;
-//        }
-        //TODO : Réussir à faire cohabiter nos quatre type de layouts
-        //TODO: On peut juste mettre à la visibilité du bouton à "gone" afin de voir le bouton d'ajout aux favois disparaitre, c'est le seul truc qui change ?
+        View view;
+
         if (viewType == VIEW_TYPE_ROW) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.track_item_list, parent, false);
         } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.track_item_grid, parent, false);
         }
 
-        MyViewHolder vh = new MyViewHolder(view);
-        return vh;
+        return new MyViewHolder(view);
     }
 
     @Override
@@ -78,12 +66,31 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Track t = listTracks.get(position);
         holder.track = t;
+        //Permet de changer une track dans recherche dans le cas où la musique a été unfav depuis le fragment Favorites
+        if(t.isFavorite()){
+            if(!controller.isFavorite(t)) t.setFavorite(false);
+        }
         holder.title.setText(t.getName());
         holder.artist.setText(t.getArtist().getName());
-        Glide.with(holder.itemView.getContext())
-                .load(t.getAlbum().getImage())
-                .into(holder.album);
+        Glide.with(holder.itemView.getContext()).load(t.getAlbum().getImage()).fitCenter().into(holder.album);
 
+        if(t.isFavorite()){
+            holder.favButton.setImageResource(R.drawable.ic_baseline_star_24);
+            holder.favButton.setOnClickListener(a -> {
+                t.setFavorite(false);
+                controller.removeTrackFromBDD(t);
+                holder.favButton.setImageResource(R.drawable.ic_baseline_star_border_24);
+            });
+        } else {
+            holder.favButton.setImageResource(R.drawable.ic_baseline_star_border_24);
+            holder.favButton.setOnClickListener(a -> {
+                t.setFavorite(true);
+                controller.saveTrackToBDD(t);
+                holder.favButton.setImageResource(R.drawable.ic_baseline_star_24);
+            });
+        }
+
+        holder.clickable.setOnClickListener(v -> openDetailsFragment(holder.track));
 
     }
 
@@ -92,41 +99,41 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder
         return listTracks.size();
     }
 
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+    }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder implements Controller.TrackCallbackListener {
-        public final View view;
-        public TextView title;
-        public TextView artist;
-        public ImageView album;
-        public Button favButton;
-        private Controller controller;
+    public void openDetailsFragment(Track track) {
 
-        public Track track;
+        // Create and show the dialog.
+        DialogFragment newFragment = new ViewPagerDetailsFragment(track, controller);
+        newFragment.show(fm, "dialog");
 
-        public MyViewHolder(View v) {
-            super(v);
-            view = v;
-            controller = new Controller(this);
-            title = view.findViewById(R.id.title);
-            artist = view.findViewById(R.id.artist);
-            album = view.findViewById(R.id.album);
-            favButton = view.findViewById(R.id.favButton);
-            favButton.setOnClickListener(a -> {
-                controller.saveTrack(track);
-            });
-        }
-
-        @Override
-        public void onFetchProgress(Track track) {
-        }
-
-        @Override
-        public void onFetchComplete() {
-        }
     }
 
     public void updateItems(List<Track> items) {
         this.listTracks = items;
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        public final View view;
+        public TextView title;
+        public TextView artist;
+        public ImageView album;
+        public ImageButton favButton;
+        public Track track;
+        public View clickable;
+
+        public MyViewHolder(View v) {
+            super(v);
+            view = v;
+            title = view.findViewById(R.id.title);
+            artist = view.findViewById(R.id.artist);
+            album = view.findViewById(R.id.album);
+            favButton = view.findViewById(R.id.favButton);
+            clickable = view.findViewById(R.id.layout);
+        }
     }
 
 }

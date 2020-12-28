@@ -61,7 +61,7 @@ public class Controller {
                     }
 
                 } else {
-                    Log.e("searchError", "response.body is null");
+                    Log.e("controller", "method[searchTracks] response.body is null");
                 }
 
                 // Tell the view the query is over
@@ -209,6 +209,7 @@ public class Controller {
             realm.executeTransaction(realm1 -> {
                 Track alreadyIn = realm1.where(Track.class).equalTo("id", track.getId()).equalTo("favorite", true).findFirst();
                 if (alreadyIn == null) {
+                    track.setFavorite(true);
                     track.setFavDate(new Date());
                     realm1.copyToRealm(track);
                 }

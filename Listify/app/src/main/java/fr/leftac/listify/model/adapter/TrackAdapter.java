@@ -66,6 +66,10 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Track t = listTracks.get(position);
         holder.track = t;
+        //Permet de changer une track dans recherche dans le cas où la musique a été unfav depuis le fragment Favorites
+        if(t.isFavorite()){
+            if(!controller.isFavorite(t)) t.setFavorite(false);
+        }
         holder.title.setText(t.getName());
         holder.artist.setText(t.getArtist().getName());
         Glide.with(holder.itemView.getContext()).load(t.getAlbum().getImage()).fitCenter().into(holder.album);

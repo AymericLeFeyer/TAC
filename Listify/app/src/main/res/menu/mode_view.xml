@@ -4,42 +4,40 @@
     <item
         android:id="@+id/action_modeview"
         android:icon="@drawable/ic_grid"
-        android:title="Changer le mode"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/change_mode"
+        app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_sort"
         android:icon="@drawable/ic_baseline_filter_list_24"
-        android:title="Trier"
+        android:title="@string/sort"
         app:showAsAction="always">
-        <menu
-            android:id="@+id/sort_menu">
+        <menu>
 
             <!-- Pour le searchFragment -->
             <item
                 android:icon="@drawable/ic_search"
-                android:title="Tri des musiques recherchées"
+                android:title="@string/sortSearch"
                 app:showAsAction="never">
                 <menu>
                     <item
                         android:id="@+id/action_search_sort1"
                         android:icon="@drawable/filter_1"
-                        android:title="Ordre alphabétique du titre"
-                        app:showAsAction="ifRoom"/>
+                        android:title="@string/sortSearch_method1"
+                        app:showAsAction="ifRoom" />
                     <item
                         android:id="@+id/action_search_sort2"
                         android:icon="@drawable/filter_2"
-                        android:title="Ordre alphabétique d'artiste"
+                        android:title="@string/sortSearch_method2"
                         app:showAsAction="ifRoom" />
                     <item
                         android:id="@+id/action_search_sort3"
                         android:icon="@drawable/filter_3"
-                        android:title="Ordre de popularité"
+                        android:title="@string/sortSearch_method3"
                         app:showAsAction="ifRoom" />
                     <item
                         android:id="@+id/action_search_sort4"
                         android:icon="@drawable/filter_4"
-                        android:title="Favoris"
+                        android:title="@string/sortSearch_method4"
                         app:showAsAction="ifRoom" />
                 </menu>
             </item>
@@ -48,23 +46,23 @@
             <!-- Pour le favoritesFragment -->
             <item
                 android:icon="@drawable/ic_favorite"
-                android:title="Tri des favoris"
+                android:title="@string/sortFavorites"
                 app:showAsAction="never">
                 <menu>
                     <item
                         android:id="@+id/action_fav_sort1"
                         android:icon="@drawable/filter_1"
-                        android:title="Ordre alphabétique du titre"
+                        android:title="@string/sortFavorites_method1"
                         app:showAsAction="ifRoom" />
                     <item
                         android:id="@+id/action_fav_sort2"
                         android:icon="@drawable/filter_2"
-                        android:title="Ordre alphabétique d'artiste"
+                        android:title="@string/sortFavorites_method2"
                         app:showAsAction="ifRoom" />
                     <item
                         android:id="@+id/action_fav_sort3"
                         android:icon="@drawable/filter_3"
-                        android:title="Date d'ajout"
+                        android:title="@string/sortFavorites_method3"
                         app:showAsAction="ifRoom" />
                 </menu>
             </item>

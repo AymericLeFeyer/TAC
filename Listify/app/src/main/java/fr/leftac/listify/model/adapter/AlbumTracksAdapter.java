@@ -17,9 +17,9 @@ import fr.leftac.listify.controller.Controller;
 import fr.leftac.listify.model.pojo.Track;
 
 public class AlbumTracksAdapter extends RecyclerView.Adapter<AlbumTracksAdapter.MyViewHolder> {
-    private List<Track> listTracks;
-    private ViewPager2 viewPager;
-    private Controller controller;
+    private final List<Track> listTracks;
+    private final ViewPager2 viewPager;
+    private final Controller controller;
 
 
     public AlbumTracksAdapter(List<Track> listTracks, ViewPager2 viewPager, Controller controller) {

@@ -32,6 +32,8 @@ import fr.leftac.listify.controller.Controller;
 import fr.leftac.listify.model.DrawableViewModel;
 import fr.leftac.listify.model.pojo.Track;
 
+import static fr.leftac.listify.R.*;
+
 public class HomeFragment extends Fragment implements Controller.TrackCallbackListener {
 
     ViewPager2 viewPager;
@@ -50,56 +52,57 @@ public class HomeFragment extends Fragment implements Controller.TrackCallbackLi
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(layout.fragment_home, container, false);
 
-        viewPager = view.findViewById(R.id.pager);
+        viewPager = view.findViewById(id.pager);
         adapter = new HomeFragment.ScreenSlidePagerAdapter(this);
         viewPager.setAdapter(adapter);
-        tabLayout = view.findViewById(R.id.tab_layout);
+        tabLayout = view.findViewById(id.tab_layout);
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> tab.setText(position == 0 ? "Recherche" : "Favoris")
         ).attach();
 
         // Toolbar
         if (getActivity() != null) {
-            Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+            Toolbar toolbar = getActivity().findViewById(id.toolbar);
             toolbar.setOnMenuItemClickListener(item -> {
                 boolean updateSearchFragment = false, updateFavFragment = false;
                 int sortMethod = 0;
                 switch(item.getItemId()){
-                    case R.id.action_modeview:
+                    case id.action_modeview:
                         switchLayout();
                         switchIcon(item);
                         break;
-                    case R.id.action_search_sort1:
+                    case id.action_search_sort1:
                         updateSearchFragment = true;
                         sortMethod = 1;
                         break;
-                    case R.id.action_search_sort2:
+                    case id.action_search_sort2:
                         updateSearchFragment = true;
                         sortMethod = 2;
                         break;
-                    case R.id.action_search_sort3:
+                    case id.action_search_sort3:
                         updateSearchFragment = true;
                         sortMethod = 3;
                         break;
-                    case R.id.action_search_sort4:
+                    case id.action_search_sort4:
                         updateSearchFragment = true;
                         sortMethod = 4;
                         break;
 
-                    case R.id.action_fav_sort1:
+                    case id.action_fav_sort1:
                         updateFavFragment = true;
                         sortMethod = 1;
                         break;
-                    case R.id.action_fav_sort2:
+                    case id.action_fav_sort2:
                         updateFavFragment = true;
                         sortMethod = 2;
                         break;
-                    case R.id.action_fav_sort3:
+                    case id.action_fav_sort3:
                         updateFavFragment = true;
                         sortMethod = 3;
                         break;
@@ -112,7 +115,6 @@ public class HomeFragment extends Fragment implements Controller.TrackCallbackLi
                     if(searchFragment.getTracks() != null && !searchFragment.getTracks().isEmpty()){
                         searchFragment.sort(sortMethod);
                         searchFragment.updateListAdapter();
-                        Toast.makeText(getActivity(), "Tri par " + item.getTitle().toString().toLowerCase() + " réalisé", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -120,7 +122,6 @@ public class HomeFragment extends Fragment implements Controller.TrackCallbackLi
                     if(favoritesFragment.getTracks() != null && !favoritesFragment.getTracks().isEmpty()) {
                         favoritesFragment.sort(sortMethod);
                         favoritesFragment.updateListAdapter();
-                        Toast.makeText(getActivity(), "Tri par " + item.getTitle().toString().toLowerCase() + " réalisé", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -161,12 +162,12 @@ public class HomeFragment extends Fragment implements Controller.TrackCallbackLi
         Context context = getContext();
         if (searchFragment != null && context != null) {
             if (searchFragment.getGridLayoutManager().getSpanCount() == 3) {
-                Drawable d = context.getDrawable(R.drawable.ic_list);
+                Drawable d = context.getDrawable(drawable.ic_list);
                 item.setIcon(d);
                 DrawableViewModel viewModel = new ViewModelProvider(requireActivity()).get(DrawableViewModel.class);
                 viewModel.setDrawableToShow(d);
             } else {
-                Drawable d = context.getDrawable(R.drawable.ic_grid);
+                Drawable d = context.getDrawable(drawable.ic_grid);
                 item.setIcon(d);
                 DrawableViewModel viewModel = new ViewModelProvider(requireActivity()).get(DrawableViewModel.class);
                 viewModel.setDrawableToShow(d);

@@ -18,7 +18,7 @@ import fr.leftac.listify.model.DataFormatter;
 import fr.leftac.listify.model.pojo.Artist;
 
 public class ArtistFragment extends Fragment {
-    private Artist artist;
+    private final Artist artist;
 
     public ArtistFragment(Artist artist) {
         this.artist = artist;

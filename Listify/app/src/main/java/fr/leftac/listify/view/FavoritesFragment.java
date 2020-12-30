@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -21,11 +22,11 @@ import fr.leftac.listify.model.pojo.Track;
 
 public class FavoritesFragment extends Fragment {
 
-    private Controller controller;
+    private final Controller controller;
     public TrackAdapter listAdapter;
     private List<Track> tracks;
     private GridLayoutManager gridLayoutManager;
-    private int spanCount;
+    private final int spanCount;
     private boolean ordreTri1 = false, ordreTri2 = false, ordreTri3 = false;
 
     public FavoritesFragment(Controller controller, int spanCount) {
@@ -85,6 +86,7 @@ public class FavoritesFragment extends Fragment {
     }
 
     public void sort(int i) {
+        int length = Toast.LENGTH_LONG;
         if(tracks != null) switch(i){
             case 1:
                 Collections.sort(tracks, new Comparator() {
@@ -96,9 +98,8 @@ public class FavoritesFragment extends Fragment {
                     }
                 });
 
-                if(!ordreTri1) {
-                    ordreTri1 = true;
-                } else ordreTri1 = false;
+                ordreTri1 = !ordreTri1;
+                Toast.makeText(getActivity(), "Tri favoris par ordre alphabétique du titre réalisé (ordre " + (ordreTri1 ? "croissant" : "décroissant") + ")", length).show();
 
                 break;
             case 2:
@@ -111,9 +112,8 @@ public class FavoritesFragment extends Fragment {
                     }
                 });
 
-                if(!ordreTri2) {
-                    ordreTri2 = true;
-                } else ordreTri2 = false;
+                ordreTri2 = !ordreTri2;
+                Toast.makeText(getActivity(), "Tri favoris par ordre alphabétique d'artiste réalisé (ordre " + (ordreTri2 ? "croissant" : "décroissant") + ")", length).show();
 
                 break;
             case 3:
@@ -126,9 +126,8 @@ public class FavoritesFragment extends Fragment {
                     }
                 });
 
-                if(!ordreTri3) {
-                    ordreTri3 = true;
-                } else ordreTri3 = false;
+                ordreTri3 = !ordreTri3;
+                Toast.makeText(getActivity(), "Tri favoris par date d'ajout réalisé (ordre " + (ordreTri3 ? "croissant" : "décroissant") + ")", length).show();
 
                 break;
             default:

@@ -4,6 +4,7 @@
     <!-- Raw texts -->
     <string name="duration">Durée</string>
     <string name="popularity">Popularité</string>
+    <string name="search">Chercher</string>
     <string name="search_button">Rechercher</string>
     <string name="followers">Followers</string>
     <string name="genres">Genres</string>
@@ -11,6 +12,20 @@
     <string name="details_artist">Détails de l\'artiste</string>
     <string name="details_album">Détails de l\'album</string>
     <string name="albumImage">Image de l\'album</string>
+    <string name="artistImage">Image de l\'artiste</string>
+    <string name="close">Fermer la fenêtre</string>
+    <string name="change_mode">Changer le mode</string>
+    <string name="sort">Trier</string>
+    <string name="sortSearch">Tri des musiques recherchées</string>
+    <string name="sortSearch_method1">Ordre alphabétique du titre</string>
+    <string name="sortSearch_method2">Ordre alphabétique d\'artiste</string>
+    <string name="sortSearch_method3">Ordre de popularité</string>
+    <string name="sortSearch_method4">Favoris</string>
+    <string name="sortFavorites">Tri des favoris</string>
+    <string name="sortFavorites_method1">Ordre alphabétique du titre</string>
+    <string name="sortFavorites_method2">Ordre alphabétique d\'artiste</string>
+    <string name="sortFavorites_method3">Date d\'ajout</string>
+
 
     <!-- Accessibility -->
     <string name="logo">Logo Listify</string>
@@ -20,7 +35,7 @@
     <!-- Toasts -->
     <string name="empty_searchfield">Veuillez compléter le champ</string>
     <string name="no_connection">Vous n\'êtes pas connecté à internet.</string>
-    <string name="listen_spotify">Écouter dans Spotify</string>
+    <string name="listen_spotify">Écouter sur Spotify</string>
     <string name="logo_titre">Logo titre</string>
     <string name="logo_spotify">Logo Spotify</string>
 

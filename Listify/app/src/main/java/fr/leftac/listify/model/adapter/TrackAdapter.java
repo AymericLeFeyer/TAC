@@ -24,9 +24,9 @@ import fr.leftac.listify.view.ViewPagerDetailsFragment;
 
 public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.MyViewHolder> {
     private List<Track> listTracks;
-    private GridLayoutManager layoutManager;
-    private Controller controller;
-    private FragmentManager fm;
+    private final GridLayoutManager layoutManager;
+    private final Controller controller;
+    private final FragmentManager fm;
 
     private static final int VIEW_TYPE_ROW = 1;
     private static final int VIEW_TYPE_COLUMN = 2;

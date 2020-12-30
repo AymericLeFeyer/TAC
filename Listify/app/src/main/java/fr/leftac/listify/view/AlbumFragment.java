@@ -26,9 +26,9 @@ import fr.leftac.listify.model.pojo.Album;
 import fr.leftac.listify.model.pojo.Track;
 
 public class AlbumFragment extends Fragment {
-    private Album album;
-    private Controller controller;
-    private ViewPager2 viewPager;
+    private final Album album;
+    private final Controller controller;
+    private final ViewPager2 viewPager;
 
     private DataListener dataListener;
 
@@ -85,7 +85,7 @@ public class AlbumFragment extends Fragment {
 
     public interface DataListener {
 
-        public void onDataReceived(Track track);
+        void onDataReceived(Track track);
 
     }
 

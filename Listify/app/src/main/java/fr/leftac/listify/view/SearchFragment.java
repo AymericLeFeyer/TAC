@@ -140,6 +140,7 @@ public class SearchFragment extends Fragment {
     }
 
     public void sort(int i) {
+        int length = Toast.LENGTH_LONG;
         if(tracks != null) switch(i){
             case 1:
                 Collections.sort(tracks, new Comparator() {
@@ -151,9 +152,8 @@ public class SearchFragment extends Fragment {
                     }
                 });
 
-                if(!ordreTri1) {
-                    ordreTri1 = true;
-                } else ordreTri1 = false;
+                ordreTri1 = !ordreTri1;
+                Toast.makeText(getActivity(), "Tri recherche par ordre alphabétique du titre réalisé (ordre " + (ordreTri1 ? "croissant" : "décroissant") + ")", length).show();
 
                 break;
             case 2:
@@ -161,14 +161,13 @@ public class SearchFragment extends Fragment {
                     @Override
                     public int compare(Object t1, Object t2) {
                         int cmp = ((Track) t1).getArtist().getName().compareTo(((Track) t2).getArtist().getName());
-                        if (!ordreTri2) return -cmp;
-                        else return cmp;
+                        if (!ordreTri2) return cmp;
+                        else return -cmp;
                     }
                 });
 
-                if(!ordreTri2) {
-                    ordreTri2 = true;
-                } else ordreTri2 = false;
+                ordreTri2 = !ordreTri2;
+                Toast.makeText(getActivity(), "Tri recherche par ordre alphabétique d'artiste réalisé (ordre " + (ordreTri2 ? "croissant" : "décroissant") + ")", length).show();
 
                 break;
             case 3:
@@ -181,9 +180,8 @@ public class SearchFragment extends Fragment {
                     }
                 });
 
-                if(!ordreTri3) {
-                    ordreTri3 = true;
-                } else ordreTri3 = false;
+                ordreTri3 = !ordreTri3;
+                Toast.makeText(getActivity(), "Tri recherche par ordre de popularité réalisé (ordre " + (ordreTri3 ? "croissant" : "décroissant") + ")", length).show();
 
                 break;
             case 4:
@@ -196,9 +194,8 @@ public class SearchFragment extends Fragment {
                     }
                 });
 
-                if(!ordreTri4) {
-                    ordreTri4 = true;
-                } else ordreTri4 = false;
+                ordreTri4 = !ordreTri4;
+                Toast.makeText(getActivity(), "Tri recherche par favoris réalisé (ordre " + (ordreTri4 ? "croissant" : "décroissant") + ")", length).show();
 
                 break;
             default:

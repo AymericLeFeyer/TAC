@@ -4,12 +4,7 @@ import com.google.gson.JsonElement;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
-import lombok.Getter;
-import lombok.Setter;
 
-// Generate getters and setters with Lombok
-@Getter
-@Setter
 public class Artist extends RealmObject {
     public String id;
     private String name;

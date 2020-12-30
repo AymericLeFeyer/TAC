@@ -3,7 +3,6 @@ package fr.leftac.listify.view;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -134,7 +133,12 @@ public class DetailsFragment extends Fragment {
 
     public void onNewTrack(Track track) {
         this.track = track;
-        setters();
+        if (track.getPopularity() == 0) {
+            controller.updateTrack(track, this);
+        } else {
+            setters();
+        }
+
 
     }
 }

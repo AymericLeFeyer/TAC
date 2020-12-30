@@ -20,6 +20,7 @@ import fr.leftac.listify.model.api.TokenManager;
 import fr.leftac.listify.model.pojo.Album;
 import fr.leftac.listify.model.pojo.Artist;
 import fr.leftac.listify.model.pojo.Track;
+import fr.leftac.listify.view.DetailsFragment;
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmResults;
@@ -61,7 +62,7 @@ public class Controller {
                     }
 
                 } else {
-                    Log.e("controller", "method[searchTracks] response.body is null");
+//                    Log.e("controller", "method[searchTracks] response.body is null");
                 }
 
                 // Tell the view the query is over
@@ -185,6 +186,38 @@ public class Controller {
 
                     track.setDuration(duration.getAsInt());
                     track.setPopularity(popularity.getAsInt());
+
+
+                } else {
+                    Log.e("searchError", "response.body is null");
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<Object> call, @NotNull Throwable t) {
+
+            }
+        });
+
+    }
+
+    public void updateTrack(Track track, DetailsFragment df) {
+        apiManager.getSpotifyApi().getTrack(TokenManager.getToken(), track.getId()).enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(@NotNull Call<Object> call, @NotNull Response<Object> response) {
+                if (response.body() != null) {
+                    // Parse the response
+                    JsonObject responseBody = parser.parse(new Gson().toJson(response.body())).getAsJsonObject();
+
+                    // Update tracks
+                    JsonPrimitive duration = responseBody.getAsJsonPrimitive("duration_ms");
+                    JsonPrimitive popularity = responseBody.getAsJsonPrimitive("popularity");
+
+                    track.setDuration(duration.getAsInt());
+                    track.setPopularity(popularity.getAsInt());
+
+                    df.setters();
 
 
                 } else {
